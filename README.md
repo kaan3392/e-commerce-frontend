@@ -31,7 +31,7 @@ Sample User Logins
 admin@gmail.com (Admin)
 123456
 
-guest@example.com (Customer)
+guest@gmail.com (Customer)
 123456
 
 ```
