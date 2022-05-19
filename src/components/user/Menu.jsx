@@ -115,7 +115,6 @@ const Menu = ({ admin }) => {
         <Categories>
           <Title>My Account</Title>
           <Item to="/">Home</Item>
-          <Item to="/">Customer service</Item>
           {currentUser === null && (
             <>
               <Item to="/login">Login</Item>
