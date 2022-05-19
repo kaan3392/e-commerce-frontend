@@ -4,9 +4,8 @@ E-Commerce built with the MERN stack
 
 ## Demo
 
-Demo link heroku: https://social-media-client-gq6ncq2en-kaan3392.vercel.app/login
+Demo link heroku: https://e-commerce-frontend-three.vercel.app/login
 
 ## For API
 
-https://github.com/kaan3392/social-media-api
-
+https://github.com/kaan3392/e-commerce-api
