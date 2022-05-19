@@ -1,4 +1,4 @@
-# e-commerce-frontend
+# E-Commerce-Frontend
 
 E-Commerce built with the MERN stack
 
