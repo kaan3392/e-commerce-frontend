@@ -118,7 +118,7 @@ const Slider = () => {
   }, [slideIndex]);
 
   useEffect(() => {
-    const interval_id = setInterval(onClick, 7000);
+    const interval_id = setInterval(onClick, 5000);
     return () => {
         clearInterval(interval_id);
     }

@@ -19,7 +19,6 @@ export const Wrapper = styled.div`
   margin-top: 100px;
   @media only screen and (max-width: 385px) {
     width: 70%;
-
   }
 `;
 
