@@ -2,7 +2,7 @@ import { Close } from "@mui/icons-material";
 import { Rating } from "@mui/material";
 import { useState } from "react";
 import styled from "styled-components";
-import { color } from "./Navbar";
+import { color } from "../../constant/colors";
 import { useSelector } from "react-redux";
 import { userRequest } from "../../requestMethods";
 

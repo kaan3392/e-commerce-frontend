@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Chart from "./Chart";
-import { FileUpload } from "@mui/icons-material";
-import { color } from "../../components/user/Navbar";
+import { color } from "../../constant/colors";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
@@ -14,6 +13,7 @@ import {
 } from "firebase/storage";
 import app from "../../firebase";
 import { updateProduct } from "../../redux/apiCalls";
+import { UploadIcon } from "../../constant/icons";
 
 const Container = styled.div`
   width: 100%;
@@ -180,10 +180,13 @@ const Button = styled.button`
 
 const Icon = styled.label`
   cursor: pointer;
+  display: flex;
+  align-items: center;
   svg {
-    font-size: 30px;
+    width: 18px;
+    height: 18px;
     &:hover {
-      color: red;
+      fill: red;
     }
   }
 `;
@@ -261,7 +264,6 @@ const ProductUpdate = () => {
     const getStat = async () => {
       try {
         const res = await userRequest.get("orders/income/" + productId);
-        console.log(res.data);
         res.data
           .sort((a, b) => a._id - b._id)
           .map((item) => {
@@ -446,7 +448,7 @@ const ProductUpdate = () => {
             <ImageCon>
               <ProductImage src={product.img} />
               <Icon htmlFor="input">
-                <FileUpload />
+                <UploadIcon />
               </Icon>
               <Input
                 style={{ display: "none" }}

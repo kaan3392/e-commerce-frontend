@@ -1,26 +1,25 @@
 import styled from "styled-components";
-import { Search, ShoppingCart, Menu } from "@mui/icons-material";
+import { MenuIcon, SearchIcon, ShoppingCartIcon } from "../../constant/icons";
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { publicRequest } from "../../requestMethods";
 
-export const color = "#383e42";
-export const navColor = "#232f3e";
-
 const Container = styled.div`
-  height: 50px;
   width: 100%;
-  background-color: #232f3e;
+  height: 60px;
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 999;
   display: flex;
   align-items: center;
-`;
+  justify-content: center;
+  `;
 
 const Wrapper = styled.div`
+  max-width: 1200px;
   width: 100%;
   padding: 0px 25px;
   display: flex;
@@ -39,10 +38,10 @@ const Left = styled.div`
     flex: 1;
   }
   svg {
-    color: white;
+    color: black;
     cursor: pointer;
     &:hover {
-      color: black;
+      color: gray;
     }
     &:active {
       color: red;
@@ -52,7 +51,7 @@ const Left = styled.div`
 
 const Logo = styled(Link)`
   font-size: 25px;
-  color: white;
+  color: black;
   font-family: "Tapestry", cursive;
   letter-spacing: 1px;
   cursor: pointer;
@@ -63,7 +62,18 @@ const Logo = styled(Link)`
   }
 `;
 
-const MenuToggle = styled.div``;
+const MenuToggle = styled.div`
+  display: flex;
+  align-items: center;
+  svg {
+    fill: black;
+    height: 18px;
+    width: 18px;
+    &:hover{
+      fill: gray;
+    }
+  }
+`;
 
 const Center = styled.div`
   flex: 3;
@@ -81,6 +91,14 @@ const SearchCon = styled.div`
   border-radius: 2px;
   position: relative;
   box-sizing: border-box;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid lightgray;
+  svg{
+    height: 18px;
+    width: 18px;
+    margin-right: 5px;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -88,10 +106,11 @@ const SearchInput = styled.input`
   outline: none;
   border: none;
   padding: 5px;
-  width: 80%;
+  width: 90%;
   border-radius: 2px;
   font-size: 16px;
   box-sizing: border-box;
+  font-weight: lighter;
 `;
 
 const Right = styled.div`
@@ -103,7 +122,7 @@ const Right = styled.div`
     flex: 1;
   }
   svg {
-    color: white;
+    color: black;
     margin-left: 10px;
     @media only screen and (max-width: 385px) {
       margin-left: 5px;
@@ -114,7 +133,7 @@ const Right = styled.div`
 const Item = styled(Link)`
   margin-left: 15px;
   cursor: pointer;
-  color: white;
+  color: black;
   text-decoration: none;
   @media only screen and (max-width: 768px) {
     margin-left: 10px;
@@ -127,19 +146,28 @@ const Item = styled(Link)`
 
 const ItemIcon = styled(Item)`
   position: relative;
+  display: flex;
+  align-items: center;
+  svg{
+    width: 24px;
+    height: 24px;
+    margin-left: 3px;
+
+  }
 `;
 
 const Badge = styled.div`
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: red;
+  background-color: white;
+  border: 0.5px solid gray;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -5px;
-  right: -3px;
+  top: -7px;
+  right: -5px;
 `;
 
 const FilteredCon = styled.div`
@@ -152,7 +180,7 @@ const FilteredCon = styled.div`
   padding: 0 5px;
   border-radius: 5px;
   border: 1px solid gray;
-  background-color: white;
+  background-color: gray;
 `;
 
 const Pro = styled.div`
@@ -203,7 +231,23 @@ const Navbar = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
+  //kullanabilirim
+
+  // const [active, setActive] = useState(false);
+
+  // const isActive = () => {
+  //   window.scrollY > 0 ? setActive(true) : setActive(false);
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener("scroll", isActive);
+  //   return () => {
+  //     window.removeEventListener("scroll", isActive);
+  //   };
+  // }, []);
+
   useEffect(() => {
+    if (text === "") return;
     const filterProducts = async () => {
       try {
         const res = await publicRequest.get(`/products?filter=${text}`);
@@ -212,9 +256,10 @@ const Navbar = () => {
         console.log(err);
       }
     };
-    if (text.length > 1) {
+    const timer = setTimeout(() => {
       filterProducts();
-    }
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [text]);
 
   useEffect(() => {
@@ -230,15 +275,16 @@ const Navbar = () => {
     setText("");
     navigate(`/product/${id}`);
   };
+
   return (
     <Container>
       <Wrapper>
         <Left>
           <MenuToggle onClick={() => dispatch({ type: "TOGGLE" })}>
-            <Menu />
+            <MenuIcon />
           </MenuToggle>
           <Logo onClick={() => dispatch({ type: "MENU_OFF" })} to="/">
-            knlcl
+            Shop.
           </Logo>
         </Left>
         <Center>
@@ -247,7 +293,7 @@ const Navbar = () => {
               onChange={(e) => setText(e.target.value)}
               placeholder="You must type at least 2 characters for the search..."
             />
-            <Search />
+            <SearchIcon />
             {filteredProducts.length > 0 && text.length > 0 && (
               <FilteredCon>
                 {filteredProducts.map((product, i) => (
@@ -263,29 +309,29 @@ const Navbar = () => {
         <Right>
           {!currentUser && (
             <>
-              <Item min to="/register">
+              <Item min="true" to="/register">
                 Register
               </Item>
-              <Item min to="/login">
+              <Item min="true" to="/login">
                 Login
               </Item>
             </>
           )}
-          {currentUser?.isAdmin && (
-            <Item min to="/admin">
+          {currentUser?.data.isAdmin && (
+            <Item min="true" to="/admin">
               Admin
             </Item>
           )}
           {currentUser && (
             <>
-              <Item min to="/profile">
+              <Item min="true" to="/profile">
                 My Account
               </Item>
             </>
           )}
           <ItemIcon to="/cart">
             <Badge>{quantity}</Badge>
-            <ShoppingCart />
+            <ShoppingCartIcon />
           </ItemIcon>
         </Right>
       </Wrapper>

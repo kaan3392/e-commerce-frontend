@@ -1,7 +1,7 @@
 import { Upload } from "@mui/icons-material";
 import { useState } from "react";
 import styled from "styled-components";
-import { color } from "../../components/user/Navbar";
+import { color } from "../../constant/colors";
 import {
   getStorage,
   ref,

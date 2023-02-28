@@ -73,9 +73,7 @@ const Order = () => {
     const getOrder = async () => {
       try {
         const res = await userRequest.get(`/orders?id=${id}`);
-        console.log(res.data);
         setOrder(res.data);
-        console.log(res.data);
       } catch (err) {
         console.log(err);
       }

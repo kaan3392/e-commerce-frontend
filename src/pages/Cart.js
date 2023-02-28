@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Menu from "../components/user/Menu";
-import Navbar, { color } from "../components/user/Navbar";
+import Navbar from "../components/user/Navbar";
 import { Container } from "./Category";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { deleteProduct, emptyCart } from "../redux/cartRedux";
+import {color} from "../constant/colors"
+
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -204,7 +206,6 @@ const Cart = () => {
   }, [stripeToken, cart, navigate]);
 
   const handleDelete = (product) => {
-    console.log(product);
     dispatch(deleteProduct(product));
   };
 

@@ -120,7 +120,7 @@ const Profile = () => {
     };
     getOrders();
   }, []);
-  console.log(orders);
+ 
   return (
     <>
       <Container>

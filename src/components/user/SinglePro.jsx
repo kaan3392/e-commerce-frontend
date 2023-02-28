@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { color } from "./Navbar";
+import { color } from "../../constant/colors";
 import Review from "./Review";
 import Rating from "@mui/material/Rating";
 import { Stack } from "@mui/material";
@@ -297,7 +297,7 @@ const SinglePro = ({ id }) => {
       try {
         const res = await publicRequest.get("/products/" + id);
         setProduct(res.data);
-        console.log(res.data);
+        
         setAvg(
           res.data.comments?.reduce(
             (acc, curr) => (acc = acc + curr.review),

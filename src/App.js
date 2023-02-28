@@ -32,7 +32,7 @@ const overlayStyle = {
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
-  const admin = useSelector((state) => state.user.currentUser?.isAdmin);
+  const admin = useSelector((state) => state.user.currentUser?.data.isAdmin);
   const { darker } = useContext(MenuContext);
 
   return (

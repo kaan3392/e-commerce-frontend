@@ -1,19 +1,19 @@
 import styled from "styled-components";
-import {
-  AttachMoney,
-  BarChart,
-  ChatBubbleOutline,
-  DynamicFeed,
-  Home,
-  MailOutline,
-  Person,
-  Report,
-  Storefront,
-  Timeline,
-  WorkOutline,
-} from "@mui/icons-material";
-import { navColor } from "../user/Navbar";
+import { navColor } from "../../constant/colors";
 import { Link } from "react-router-dom";
+import {
+AnalyticsIcon,
+ChartLineIcon,
+FeedbackIcon,
+HomeIcon,
+MailIcon,
+ManageIcon,
+MessageIcon,
+ProductsIcon,
+ReportIcon,
+SalesIcon,
+UsersIcon
+} from "../../constant/icons"
 
 const Container = styled.div`
   flex: 1;
@@ -29,6 +29,10 @@ flex: 0.6;
 const Wrapper = styled.div`
   padding: 20px;
   width: 90%;
+  svg{
+    width: 18px;
+    height: 18px;
+  }
   @media only screen and (max-width: 385px) {
 padding: 10px;
 }
@@ -82,52 +86,52 @@ const LeftSide = () => {
           <Title>Dashboard</Title>
           <List>
             <ListItem to="/admin">
-              <Home /> Home
+              <HomeIcon /> Home
             </ListItem>
             <ListItem to="/sales">
-              <BarChart /> Analytics
+              <AnalyticsIcon /> Analytics
             </ListItem>
             <ListItem to="/admin">
-              <AttachMoney /> Sales(not functional)
+              <SalesIcon /> Sales(not functional)
             </ListItem>
           </List>
           <Title>Quick Menu</Title>
           <List>
             <ListItem to="/admin/userlist">
-              <Person /> Users
+              <UsersIcon /> Users
             </ListItem>
             <ListItem to="/admin/productlist">
-              <Storefront /> Products
+              <ProductsIcon /> Products
             </ListItem>
             <ListItem to="/orders">
-              <AttachMoney /> Transactions
+              <SalesIcon /> Transactions
             </ListItem>
             <ListItem to="/admin">
-              <BarChart /> Reports(nf)
+              <AnalyticsIcon /> Reports(nf)
             </ListItem>
           </List>
           <Title>Notifications</Title>
           <List>
             <ListItem to="/admin">
-              <MailOutline /> Mail(nf)
+              <MailIcon /> Mail(nf)
             </ListItem>
             <ListItem to="/admin">
-              <DynamicFeed /> Feedbacks(nf)
+              <FeedbackIcon /> Feedbacks(nf)
             </ListItem>
             <ListItem to="/admin">
-              <ChatBubbleOutline /> Messages(nf)
+              <MessageIcon /> Messages(nf)
             </ListItem>
           </List>
           <Title>Staff</Title>
           <List>
             <ListItem to="/admin">
-              <WorkOutline /> Manage(nf)
+              <ManageIcon /> Manage(nf)
             </ListItem>
             <ListItem to="/admin">
-              <Timeline /> Analytics(nf)
+              <ChartLineIcon /> Analytics(nf)
             </ListItem>
             <ListItem to="/admin">
-              <Report /> Reports(nf)
+              <ReportIcon /> Reports(nf)
             </ListItem>
           </List>
         </Wrapper>

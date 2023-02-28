@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = process.env.NODE_ENV === "development"
-? "http://localhost:8800/api/"
-: "https://tan-embarrassed-elephant.cyclic.app/api/";
+const BASE_URL = process.env.REACT_APP_NODE_ENV === "development"
+? "http://localhost:8800/api"
+: "https://tan-embarrassed-elephant.cyclic.app/api";
 
 
 let TOKEN = "";

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { DataGrid } from "@mui/x-data-grid";
-import { DeleteOutline } from "@mui/icons-material";
-import { color } from "../user/Navbar";
+import { color } from "../../constant/colors";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
 import { deleteProduct, getProducts } from "../../redux/apiCalls";
+import { DeleteIcon } from "../../constant/icons";
 
 const Container = styled.div`
   width: 100%;
@@ -50,7 +50,13 @@ margin-right: 0;
   }
 `;
 
-const Icon = styled.div``;
+const Icon = styled.div`
+display: flex;
+align-items: center;
+svg{
+  width: 18px;
+  height: 18px;
+}`;
 
 const User = styled.div`
   display: flex;
@@ -136,7 +142,7 @@ const UsersList = () => {
                 <Button>Edit</Button>
               </Link>
               <Icon onClick={() => handleDelete(params.row._id)}>
-                <DeleteOutline />
+                <DeleteIcon />
               </Icon>
             </ButtonCon>
           </>

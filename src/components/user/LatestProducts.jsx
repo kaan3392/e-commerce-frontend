@@ -83,6 +83,7 @@ const LatestProducts = () => {
     const getProducts = async () => {
       try {
         const res = await publicRequest.get("/products?newPro=true");
+        console.log(res.data)
         setProducts(res.data);
       } catch (err) {
         console.log(err);

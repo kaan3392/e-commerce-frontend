@@ -4,37 +4,26 @@ import styled from "styled-components";
 import Menu from "../components/user/Menu";
 import Navbar from "../components/user/Navbar";
 import { publicRequest } from "../requestMethods";
-import { Button, Container, Input, InputCon, Wrapper } from "./Login";
+import {
+  Button,
+  Container,
+  Input,
+  InputCon,
+  Wrapper,
+  ForgotPassword,
+  Text,
+} from "./Login";
 
 const Form = styled.form``;
 
-const Text = styled.div`
-  width: 100%;
-  font-size: ${(props) => (props.register ? "30px" : "20px")};
-  padding-bottom: ${(props) => props.register && "25px"};
-  margin-bottom: 10px;
-`;
-
-const Login = styled.span`
-  font-size: 20px;
+const Login = styled(Link)`
+  color: inherit;
   font-weight: 300;
 `;
 
-const LoginPage = styled(Link)`
-  text-decoration: none;
-  color: blue;
-  font-size: 20px;
-`;
-export const MessageContainer = styled.div`
-  position: fixed;
-  background-color: red;
-  padding: 5px;
-  border-radius: 5px;
-  bottom: 0;
-  right: 0;
-`;
 export const Message = styled.span`
-  color: white;
+  color: red;
+  font-weight: lighter;
 `;
 
 const Register = () => {
@@ -44,10 +33,12 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
-  const [errMsg, setErrMsg] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(password);
+    console.log(passwordAgain);
     if (password !== passwordAgain) {
       document
         .getElementById("passwordAgain")
@@ -62,14 +53,15 @@ const Register = () => {
         await publicRequest.post("/auth/register", user);
         navigate("/login");
       } catch (error) {
-        setErrMsg(error.response.data);
+        setErrorMessage(error.response.data.message);
+      } finally {
         setTimeout(() => {
-          setErrMsg(null);
-          setUsername("")
-          setEmail("")
-          setPassword("")
-          setPasswordAgain("")
-        }, 3000);
+          setErrorMessage(null);
+          setUsername("");
+          setEmail("");
+          setPassword("");
+          setPasswordAgain("");
+        }, 2000);
       }
     }
   };
@@ -81,26 +73,28 @@ const Register = () => {
       <Container>
         <Wrapper>
           <Form onSubmit={handleSubmit}>
-            <Text register>Register</Text>
-            <Text>Username</Text>
+            <Text big>Register</Text>
+            <Text>username</Text>
             <InputCon>
               <Input
                 required
                 onChange={(e) => setUsername(e.target.value)}
                 type="text"
                 placeholder="Enter your Username..."
+                value={username}
               />
             </InputCon>
-            <Text>Email</Text>
+            <Text>email</Text>
             <InputCon>
               <Input
                 required
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Enter your Email..."
+                value={email}
               />
             </InputCon>
-            <Text>Password</Text>
+            <Text>password</Text>
             <InputCon>
               <Input
                 required
@@ -108,9 +102,10 @@ const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Enter your Password..."
+                value={password}
               />
             </InputCon>
-            <Text>Confirm Password</Text>
+            <Text>confirm password</Text>
             <InputCon>
               <Input
                 id="passwordAgain"
@@ -119,18 +114,15 @@ const Register = () => {
                 onChange={(e) => setPasswordAgain(e.target.value)}
                 type="password"
                 placeholder="Enter your Password..."
+                value={passwordAgain}
               />
             </InputCon>
             <Button>Register</Button>
-            <Login>Do you already have an account? </Login>
-            <LoginPage to="/login">Login</LoginPage>
           </Form>
+          {errorMessage && <Message>{errorMessage}</Message>}
+          <Login to="/login">Do you already have an account? </Login>
+          <ForgotPassword to="/login">Forgot password?</ForgotPassword>
         </Wrapper>
-        {errMsg && (
-          <MessageContainer>
-            <Message>{errMsg}</Message>
-          </MessageContainer>
-        )}
       </Container>
     </>
   );

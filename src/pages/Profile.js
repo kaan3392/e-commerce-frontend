@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Menu from "../components/user/Menu";
-import Navbar, { color } from "../components/user/Navbar";
+import Navbar from "../components/user/Navbar";
+import {color} from "../constant/colors"
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";

@@ -44,23 +44,17 @@ const ProductList = ({ category, products }) => {
     const s = value.split("-");
     setFilterRange(s);
   };
-  console.log(filterRange)
-  console.log(filterRange[0])
-  console.log(filterRange[1])
+ 
 
 
 
   const filProducts = useMemo(() => {
     return products.filter((p) => {
-      console.log(p.price > Number(filterRange[0]));
-      console.log(p.price <= Number(filterRange[1]));
-      console.log(p.price > Number(filterRange[0]) && p.price <= Number(filterRange[1]))
-      console.log(products)
+      
       return p.price > Number(filterRange[0]) && p.price <= Number(filterRange[1]);
     });
   }, [filterRange, products]);
 
-  console.log(filProducts);
 
   return (
     <>
