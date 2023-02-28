@@ -20,8 +20,8 @@ import OrderList from "./pages/OrderList";
 import SalesAnalytics from "./pages/SalesAnalytics";
 
 const overlayStyle = {
-  background: "rgba(0, 0, 0, 0.6)",
-  zIndex: "5",
+  background: "rgba(0, 0, 0, 0.4)",
+  zIndex: "9",
   transition: "all .3s ease",
   position: "absolute",
   left: 0,

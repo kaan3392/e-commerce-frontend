@@ -95,10 +95,12 @@ const ProductsSlider = () => {
       try {
         const res = await publicRequest.get("/products?newPro=true");
         setProducts(res.data);
+
       } catch (err) {
         console.log(err);
       }
     };
+    
     getProduct();
   }, []);
 

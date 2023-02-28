@@ -85,7 +85,7 @@ export const getClients = async (dispatch) => {
 export const deleteClient = async (id, dispatch) => {
   dispatch(fetchingStart());
   try {
-    const res = await userRequest.delete(`/users/${id}`);
+  await userRequest.delete(`/users/${id}`);
     dispatch(deleteClientSuccess(id));
   } catch (err) {
     dispatch(errorWarning());

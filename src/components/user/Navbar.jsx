@@ -96,8 +96,7 @@ const SearchCon = styled.div`
   border-radius: 2px;
   position: relative;
   box-sizing: border-box;
-  border-radius: 10px;
-  overflow: hidden;
+  border-radius: 5px;
   border: 1px solid lightgray;
   svg {
     height: 18px;
@@ -182,7 +181,7 @@ const Badge = styled.div`
   position: absolute;
   top: -7px;
   right: -5px;
-  color:${props => props.full ? "red": "black"}
+  color:${props => props.full ? "red": "black"};
 `;
 
 const FilteredCon = styled.div`
@@ -195,7 +194,7 @@ const FilteredCon = styled.div`
   padding: 0 5px;
   border-radius: 5px;
   border: 1px solid gray;
-  background-color: gray;
+  background-color: darkgray;
 `;
 
 const Pro = styled.div`
@@ -205,12 +204,11 @@ const Pro = styled.div`
   justify-content: space-between;
   padding: 5px 10px;
   margin-bottom: 5px;
-  border-radius: 25px;
   width: 100%;
-  background-color: white;
   cursor: pointer;
+  border-left: 1px solid transparent;
   &:hover {
-    background-color: #f2f2f2;
+    border-left: 1px solid white;
   }
   &:first-child {
     margin-top: 5px;
@@ -246,27 +244,13 @@ const Navbar = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
-  //kullanabilirim
-
-  // const [active, setActive] = useState(false);
-
-  // const isActive = () => {
-  //   window.scrollY > 0 ? setActive(true) : setActive(false);
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", isActive);
-  //   return () => {
-  //     window.removeEventListener("scroll", isActive);
-  //   };
-  // }, []);
-
   useEffect(() => {
     if (text === "") return;
     const filterProducts = async () => {
       try {
         const res = await publicRequest.get(`/products?filter=${text}`);
         setFilteredProducts(res.data);
+        console.log(res.data)
       } catch (err) {
         console.log(err);
       }
@@ -311,8 +295,8 @@ const Navbar = () => {
             <SearchIcon />
             {filteredProducts.length > 0 && text.length > 0 && (
               <FilteredCon>
-                {filteredProducts.map((product, i) => (
-                  <Pro onClick={() => handleClick(product._id)} key={i}>
+                {filteredProducts?.map((product, i) => (
+                  <Pro key={i} onClick={() => handleClick(product._id)} >
                     <Text> {product.title}</Text>
                     <Image src={product.img} />
                   </Pro>

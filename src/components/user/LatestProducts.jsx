@@ -42,6 +42,10 @@ export const Frame = styled(Link)`
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+  transition: all .5s ease;
+  &:hover{
+    transform: scale(1.02);
+  }
   @media only screen and (max-width: 768px) {
    width: 250px;
   }
@@ -87,7 +91,6 @@ const LatestProducts = () => {
     const getProducts = async () => {
       try {
         const res = await publicRequest.get("/products?newPro=true");
-        console.log("*******res********",res.data)
         setProducts(res.data);
       } catch (err) {
         console.log(err);
