@@ -124,7 +124,7 @@ const ProductsSlider = () => {
           <ArrowLeftOutlined />
         </Arrow>
         <MainCon ref={mainRef}>
-          {products.map((p, i) => (
+          {products?.map((p, i) => (
             <Frame key={i} to={`/product/${p._id}`} ref={frameRef}>
               <Image src={p.img} />
               <TextContainer>
