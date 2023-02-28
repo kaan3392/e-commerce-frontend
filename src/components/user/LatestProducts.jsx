@@ -6,10 +6,14 @@ import { publicRequest } from "../../requestMethods";
 
 const Container = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 `;
 
 const Wrapper = styled.div`
-  padding: 0 200px;
+  width: 80%;
   @media only screen and (max-width: 768px) {
    padding: 0 100px;
   }
@@ -20,8 +24,9 @@ const Wrapper = styled.div`
 
 export const Main = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
+  gap: 20px;
   @media only screen and (max-width: 768px) {
    justify-content: flex-start;
   }
@@ -31,10 +36,9 @@ export const Frame = styled(Link)`
   display: flex;
   width: 350px;
   border-radius: 10px;
-  box-shadow: 0px 0px 11px -5px rgba(0, 0, 0, 0.3);
-  margin-bottom: 20px;
-  margin-right: 20px;
+  border:1px solid lightgray;
   flex-direction: column;
+  align-items: center;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -45,7 +49,7 @@ export const Frame = styled(Link)`
 `;
 
 export const Image = styled.img`
-  width: 100%;
+  width: 90%;
   object-fit: contain;
   height: 300px;
 `;
@@ -65,13 +69,13 @@ const Title = styled.div`
   font-size: ${(props) => (props.latest ? "25px" : "18px")};
   margin-left: 5px;
   margin-bottom: ${(props) => (props.latest ? "15px" : "5px")};
-  font-weight: 500;
+  font-weight: 300;
   color: #232f3e;
   padding-left: ${(props) => props.latest && "15px"};
 `;
 
 export const Price = styled.span`
-  font-weight: 300;
+  font-weight: 500;
   margin-left: 5px;
   margin-bottom: 5px;
 `;
@@ -83,7 +87,6 @@ const LatestProducts = () => {
     const getProducts = async () => {
       try {
         const res = await publicRequest.get("/products?newPro=true");
-        console.log(res.data)
         setProducts(res.data);
       } catch (err) {
         console.log(err);

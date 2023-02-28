@@ -5,9 +5,11 @@ import { ArrowRightOutlined, ArrowLeftOutlined } from "@mui/icons-material";
 
 const Container = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 90vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
   @media only screen and (max-width: 768px) {
     height: 60vh;
   }
@@ -17,8 +19,8 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 750px;
-  height: 450px;
+  width: 850px;
+  height: 500px;
   margin-top: 40px;
   display: flex;
   overflow: hidden;
@@ -47,14 +49,13 @@ export const Arrow = styled.div`
   cursor: pointer;
   opacity: 0.8;
   z-index: 2;
-  transition: all .2s ease;
-  &:hover{
-      transform: scale(1.3);
+  transition: all 0.2s ease;
+  &:hover {
+    transform: scale(1.3);
   }
   @media only screen and (max-width: 385px) {
     width: 20px;
     height: 20px;
-
   }
 `;
 
@@ -65,23 +66,21 @@ export const Main = styled.div`
 `;
 
 const SliderCon = styled.div`
-  width:${props => props.active ? "750px" : "0px"};
-  height: ${props => props.active ? "450px" : "0px"};
+  width: ${(props) => (props.active ? "850px" : "0px")};
+  height: ${(props) => (props.active ? "500px" : "0px")};
   position: relative;
   @media only screen and (max-width: 385px) {
-    width:${props => props.active ? "350px" : "0px"};
-  height: ${props => props.active ? "280px" : "0px"};
+    width: ${(props) => (props.active ? "350px" : "0px")};
+    height: ${(props) => (props.active ? "280px" : "0px")};
   }
-
 `;
 
 const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: ${props => props.active ? 1 : 0};
-  transition: all .5s ease;
- 
+  opacity: ${(props) => (props.active ? 1 : 0)};
+  transition: all 0.5s ease;
 `;
 
 const Text = styled.span`
@@ -92,10 +91,35 @@ const Text = styled.span`
   color: white;
   font-size: 35px;
   font-weight: 500;
-  display: ${props => !props.active && "none"};
+  display: ${(props) => !props.active && "none"};
   @media only screen and (max-width: 385px) {
     font-size: 25px;
   }
+`;
+
+const ImageContainer = styled.div`
+  width: 850px;
+  height: 120px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+  gap: 5px;
+`;
+
+const LittleImageContainer = styled.div`
+  flex: 1;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+`;
+
+const LittleImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
 `;
 
 const Slider = () => {
@@ -103,26 +127,26 @@ const Slider = () => {
 
   const handleClick = (direction) => {
     if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 3);
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 4);
     } else {
-      setSlideIndex(slideIndex < 3 ? slideIndex + 1 : 0);
+      setSlideIndex(slideIndex < 4 ? slideIndex + 1 : 0);
     }
   };
 
   const onClick = useCallback(() => {
-      if(slideIndex < 3){
-          setSlideIndex(prev => prev + 1)
-      }else{
-        setSlideIndex(0)
-      }
+    if (slideIndex < 4) {
+      setSlideIndex((prev) => prev + 1);
+    } else {
+      setSlideIndex(0);
+    }
   }, [slideIndex]);
 
   useEffect(() => {
-    const interval_id = setInterval(onClick, 5000);
+    const interval_id = setInterval(onClick, 7000);
     return () => {
-        clearInterval(interval_id);
-    }
-  },[onClick])
+      clearInterval(interval_id);
+    };
+  }, [onClick]);
 
   return (
     <Container>
@@ -142,6 +166,13 @@ const Slider = () => {
           <ArrowRightOutlined />
         </Arrow>
       </Wrapper>
+      <ImageContainer>
+        {data.map((item, index) => (
+          <LittleImageContainer onClick={() => setSlideIndex(index)}>
+            <LittleImage src={item.img} />
+          </LittleImageContainer>
+        ))}
+      </ImageContainer>
     </Container>
   );
 };

@@ -72,6 +72,9 @@ export const Button = styled.button`
   &:disabled {
     cursor: not-allowed;
   }
+  ${InputCon}:hover && {
+    background-color: red;
+  }
 `;
 
 const Register = styled(Link)`

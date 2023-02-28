@@ -1,3 +1,4 @@
+import Caurier from "../components/user/Caurier";
 import Footer from "../components/user/Footer";
 import LatestProducts from "../components/user/LatestProducts";
 import Menu from "../components/user/Menu";
@@ -13,6 +14,7 @@ const Home = () => {
     <Slider/>
     <ProductsSlider/>
     <LatestProducts/>
+    <Caurier/>
     <Footer/>
     </>
   )

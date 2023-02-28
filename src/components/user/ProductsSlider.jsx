@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
-  height: 50vh;
+  height: 60vh;
   margin-top: 25px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
   @media only screen and (max-width: 768px) {
     margin-top: 10px;
     height: 30vh;
@@ -21,11 +23,12 @@ const Container = styled.div`
 `;
 const Wrapper = styled.div`
   width: 75%;
-  height: 75%;
+  height: 85%;
   border-radius: 20px;
   position: relative;
-  box-shadow: 0px 0px 12px -1px rgba(0, 0, 0, 0.14);
   overflow: hidden;
+  box-shadow: 0px 0px 12px -1px rgba(0, 0, 0, 0.14);
+  gap: 20px;
   @media only screen and (max-width: 768px) {
     width: 90%;
     display: flex;
@@ -33,15 +36,15 @@ const Wrapper = styled.div`
   @media only screen and (max-width: 385px) {
     width: 95%;
   }
-`;
+  `;
 const Frame = styled(Link)`
-  height: 100%;
-  box-sizing: border-box;
-  min-width: 33%;
-  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
+  box-sizing: border-box;
+  min-width: 25%;
   text-decoration: none;
   color: inherit;
   @media only screen and (max-width: 768px) {
@@ -50,31 +53,31 @@ const Frame = styled(Link)`
   }
 `;
 const Image = styled.img`
-  height: 100%;
+  height: 70%;
   object-fit: cover;
 `;
-const Desc = styled.span`
-  position: absolute;
-  font-size: 20px;
-  color: black;
-  top: 0;
-  left: 25px;
-  font-weight: 500;
-  @media only screen and (max-width: 385px) {
-    font-size: 16px;
-    left: 20px;
-  }
+
+const TextContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
 `;
-const Price = styled.span`
-  position: absolute;
-  bottom: 0;
-  right: 70px;
-  font-size: 25px;
+
+const Desc = styled.div`
+  font-size: 20px;
   color: black;
   font-weight: 300;
   @media only screen and (max-width: 385px) {
-    font-size: 20px;
+    font-size: 16px;
+  }
+`;
 
+const Price = styled.div`
+  font-size: 28px;
+  color: black;
+  font-weight: 500;
+  @media only screen and (max-width: 385px) {
+    font-size: 20px;
   }
 `;
 const MainCon = styled(Main)`
@@ -102,9 +105,9 @@ const ProductsSlider = () => {
 
   const handleClick = (direction) => {
     if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 3);
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
     } else {
-      setSlideIndex(slideIndex < 3 ? slideIndex + 1 : 0);
+      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   };
 
@@ -125,8 +128,10 @@ const ProductsSlider = () => {
           {products.map((p, i) => (
             <Frame key={i} to={`/product/${p._id}`} ref={frameRef}>
               <Image src={p.img} />
-              <Desc>{p.title}</Desc>
-              <Price>${p.price}</Price>
+              <TextContainer>
+                <Desc>{p.title}</Desc>
+                <Price>${p.price}</Price>
+              </TextContainer>
             </Frame>
           ))}
         </MainCon>

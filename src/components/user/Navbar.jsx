@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { MenuIcon, SearchIcon, ShoppingCartIcon } from "../../constant/icons";
+import {
+  FavoriteIcon,
+  MenuIcon,
+  SearchIcon,
+  ShoppingCartIcon,
+} from "../../constant/icons";
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,7 +21,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  `;
+`;
 
 const Wrapper = styled.div`
   max-width: 1200px;
@@ -69,7 +74,7 @@ const MenuToggle = styled.div`
     fill: black;
     height: 18px;
     width: 18px;
-    &:hover{
+    &:hover {
       fill: gray;
     }
   }
@@ -94,7 +99,7 @@ const SearchCon = styled.div`
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid lightgray;
-  svg{
+  svg {
     height: 18px;
     width: 18px;
     margin-right: 5px;
@@ -135,6 +140,16 @@ const Item = styled(Link)`
   cursor: pointer;
   color: black;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  svg {
+    width: 24px;
+    height: 24px;
+    margin-left: 3px;
+    &:hover{
+      fill: red;
+    }
+  }
   @media only screen and (max-width: 768px) {
     margin-left: 10px;
   }
@@ -148,11 +163,10 @@ const ItemIcon = styled(Item)`
   position: relative;
   display: flex;
   align-items: center;
-  svg{
+  svg {
     width: 24px;
     height: 24px;
     margin-left: 3px;
-
   }
 `;
 
@@ -168,6 +182,7 @@ const Badge = styled.div`
   position: absolute;
   top: -7px;
   right: -5px;
+  color:${props => props.full ? "red": "black"}
 `;
 
 const FilteredCon = styled.div`
@@ -327,10 +342,13 @@ const Navbar = () => {
               <Item min="true" to="/profile">
                 My Account
               </Item>
+              <Item min="true" to="/profile">
+                <FavoriteIcon />
+              </Item>
             </>
           )}
           <ItemIcon to="/cart">
-            <Badge>{quantity}</Badge>
+            <Badge full={quantity?.length > 0}>{quantity}</Badge>
             <ShoppingCartIcon />
           </ItemIcon>
         </Right>
