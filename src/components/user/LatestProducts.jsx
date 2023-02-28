@@ -100,11 +100,11 @@ const LatestProducts = () => {
       <Wrapper>
         <Title latest>Latest Products</Title>
         <Main>
-          {products.map((p, i) => (
+          {products?.map((p, i) => (
             <Frame key={i} to={`/product/${p._id}`}>
               <Image src={p.img} />
               <Title>{p.title}</Title>
-              {p.comments.length > 0 && (
+              {p.comments?.length > 0 && (
                 <Review>
                   <Rating
                     name="half-rating-read"
