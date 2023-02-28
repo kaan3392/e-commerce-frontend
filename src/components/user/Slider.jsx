@@ -168,7 +168,7 @@ const Slider = () => {
       </Wrapper>
       <ImageContainer>
         {data.map((item, index) => (
-          <LittleImageContainer onClick={() => setSlideIndex(index)}>
+          <LittleImageContainer key={index} onClick={() => setSlideIndex(index)}>
             <LittleImage src={item.img} />
           </LittleImageContainer>
         ))}

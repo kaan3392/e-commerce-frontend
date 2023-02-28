@@ -93,9 +93,8 @@ const ProductsSlider = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await publicRequest.get("/products");
-        const p = res.data.slice(0, 6);
-        setProducts(p);
+        const res = await publicRequest.get("/products?newPro=true");
+        setProducts(res.data);
       } catch (err) {
         console.log(err);
       }
