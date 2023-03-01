@@ -89,18 +89,23 @@ const ProductsSlider = () => {
   const frameRef = useRef(null);
   const mainRef = useRef(null);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(false);
+  
 
   useEffect(() => {
     const getProduct = async () => {
+      setLoading(true)
       try {
         const res = await publicRequest.get("/products?newPro=true");
         setProducts(res.data);
-
       } catch (err) {
         console.log(err);
+        setError(err)
+      }finally{
+        setLoading(false)
       }
     };
-    
     getProduct();
   }, []);
 
@@ -118,6 +123,10 @@ const ProductsSlider = () => {
       -productWidth * slideIndex
     }px)`;
   }, [slideIndex]);
+
+  if(loading){
+    return <div>Loading...</div>
+  }
 
   return (
     <Container>
