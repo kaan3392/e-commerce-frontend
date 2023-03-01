@@ -4,6 +4,7 @@ import { Arrow, Main } from "./Slider";
 import { useState, useRef, useEffect } from "react";
 import { publicRequest } from "../../requestMethods";
 import { Link } from "react-router-dom";
+import LoadingScreen from "./LoadingScreen";
 
 const Container = styled.div`
   width: 100%;
@@ -36,7 +37,7 @@ const Wrapper = styled.div`
   @media only screen and (max-width: 385px) {
     width: 95%;
   }
-  `;
+`;
 const Frame = styled(Link)`
   display: flex;
   flex-direction: column;
@@ -84,6 +85,7 @@ const MainCon = styled(Main)`
   transition: all 0.7s ease;
 `;
 
+
 const ProductsSlider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const frameRef = useRef(null);
@@ -91,18 +93,17 @@ const ProductsSlider = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(false);
-  
 
   useEffect(() => {
     const getProduct = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         const res = await publicRequest.get("/products?newPro=true");
         setProducts(res.data);
       } catch (err) {
         console.log(err);
-        setError(err)
-      }finally{
+        setError(err);
+      } finally {
         setLoading(false)
       }
     };
@@ -125,7 +126,11 @@ const ProductsSlider = () => {
   }, [slideIndex]);
 
   if(loading){
-    return <div>Loading...</div>
+    return(
+      <Container>
+        <LoadingScreen/>
+      </Container>
+    )
   }
 
   return (

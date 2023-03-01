@@ -3,19 +3,20 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../../requestMethods";
+import LoadingScreen from "./LoadingScreen";
 
 const Container = styled.div`
   width: 100%;
+  min-height:50vh;
   display: flex;
   align-items: center;
   justify-content: center;
-
 `;
 
 const Wrapper = styled.div`
   width: 80%;
   @media only screen and (max-width: 768px) {
-   padding: 0 100px;
+    padding: 0 100px;
   }
   @media only screen and (max-width: 385px) {
     padding: 0px 50px;
@@ -28,7 +29,7 @@ export const Main = styled.div`
   flex-wrap: wrap;
   gap: 20px;
   @media only screen and (max-width: 768px) {
-   justify-content: flex-start;
+    justify-content: flex-start;
   }
 `;
 
@@ -36,20 +37,20 @@ export const Frame = styled(Link)`
   display: flex;
   width: 350px;
   border-radius: 10px;
-  border:1px solid lightgray;
+  border: 1px solid lightgray;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  transition: all .5s ease;
-  &:hover{
+  transition: all 0.5s ease;
+  &:hover {
     transform: scale(1.02);
+    box-shadow: 3px 2px 11px 1px rgba(0, 0, 0, 0.2);
   }
   @media only screen and (max-width: 768px) {
-   width: 250px;
+    width: 250px;
   }
-  
 `;
 
 export const Image = styled.img`
@@ -89,27 +90,30 @@ const LatestProducts = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-
   useEffect(() => {
     const getProducts = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         const res = await publicRequest.get("/products?newPro=true");
         setProducts(res.data);
       } catch (err) {
         console.log(err);
-        setError(err)
-      }finally{
-        setLoading(false)
+        setError(err);
+      } finally {
+        setLoading(false);
       }
     };
     getProducts();
   }, []);
 
   if(loading){
-    return <div>Loading...</div>
+    return(
+      <Container>
+        <LoadingScreen/>
+      </Container>
+    )
   }
-  
+
   return (
     <Container>
       <Wrapper>
