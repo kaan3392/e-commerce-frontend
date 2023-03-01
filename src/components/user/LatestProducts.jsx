@@ -86,19 +86,30 @@ export const Price = styled.span`
 
 const LatestProducts = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
 
   useEffect(() => {
     const getProducts = async () => {
+      setLoading(true)
       try {
         const res = await publicRequest.get("/products?newPro=true");
         setProducts(res.data);
       } catch (err) {
         console.log(err);
+        setError(err)
+      }finally{
+        setLoading(false)
       }
     };
     getProducts();
   }, []);
 
+  if(loading){
+    return <div>Loading...</div>
+  }
+  
   return (
     <Container>
       <Wrapper>
