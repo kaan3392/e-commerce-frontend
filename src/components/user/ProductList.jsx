@@ -1,6 +1,5 @@
 import { Rating } from "@mui/material";
 import { useState, useMemo } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   Frame,
@@ -19,12 +18,12 @@ const Top = styled.div`
 const Text = styled.span`
   font-size: 18px;
 `;
+
 const PriceFilter = styled.select`
   padding: 5px;
   border-radius: 5px;
 `;
-const PriceChoose = styled.option``;
-const Bottom = styled.div``;
+
 const Title = styled.div`
   font-size: ${(props) => (props.cat ? "35px" : "18px")};
   margin-left: 5px;
@@ -36,7 +35,6 @@ const Title = styled.div`
 
 const ProductList = ({ category, products }) => {
   const catName = category.toUpperCase();
-  // const { catProducts } = useSelector((state) => state.category);
   const [filterRange, setFilterRange] = useState(["0", "10000"]);
 
   const handleChange = (e) => {
@@ -61,15 +59,15 @@ const ProductList = ({ category, products }) => {
       <Top>
         <Text>Price: </Text>
         <PriceFilter onChange={handleChange}>
-          <PriceChoose value="0-10000">Filter by price</PriceChoose>
-          <PriceChoose value="0-200">Less than 200$</PriceChoose>
-          <PriceChoose value="201-300">201$-300$</PriceChoose>
-          <PriceChoose value="301-400">301$-400$</PriceChoose>
-          <PriceChoose value="401-600">401$-600$</PriceChoose>
-          <PriceChoose value="600-10000">More than 600$</PriceChoose>
+          <option value="0-10000">Filter by price</option>
+          <option value="0-200">Less than 200$</option>
+          <option value="201-300">201$-300$</option>
+          <option value="301-400">301$-400$</option>
+          <option value="401-600">401$-600$</option>
+          <option value="600-10000">More than 600$</option>
         </PriceFilter>
       </Top>
-      <Bottom>
+      <div>
         <Title cat>{catName}S</Title>
         <Main>
           {filProducts?.map((p, i) => (
@@ -94,7 +92,7 @@ const ProductList = ({ category, products }) => {
             </Frame>
           ))}
         </Main>
-      </Bottom>
+      </div>
     </>
   );
 };

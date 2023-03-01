@@ -12,15 +12,15 @@ import { useSelector } from "react-redux";
 import { publicRequest } from "../../requestMethods";
 
 const Container = styled.div`
-  width: 100%;
-  height: 60px;
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 99px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(10px);
 `;
 
 const Wrapper = styled.div`
@@ -28,11 +28,22 @@ const Wrapper = styled.div`
   width: 100%;
   padding: 0px 25px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
   @media only screen and (max-width: 768px) {
     padding: 0px 15px;
   }
+`;
+
+const Top = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-self: ${(props) => props.active && "flex-start"};
+  height: 66px;
+  border-bottom: 1px solid lightgray;
 `;
 
 const Left = styled.div`
@@ -109,12 +120,12 @@ const SearchInput = styled.input`
   background-color: inherit;
   outline: none;
   border: none;
-  padding: 5px;
+  padding: 10px;
   width: 90%;
   border-radius: 2px;
-  font-size: 16px;
   box-sizing: border-box;
   font-weight: lighter;
+  margin-left: 5px;
 `;
 
 const Right = styled.div`
@@ -145,7 +156,7 @@ const Item = styled(Link)`
     width: 24px;
     height: 24px;
     margin-left: 3px;
-    &:hover{
+    &:hover {
       fill: red;
     }
   }
@@ -181,7 +192,7 @@ const Badge = styled.div`
   position: absolute;
   top: -7px;
   right: -5px;
-  color:${props => props.full ? "red": "black"};
+  color: ${(props) => (props.full ? "red" : "black")};
 `;
 
 const FilteredCon = styled.div`
@@ -190,11 +201,11 @@ const FilteredCon = styled.div`
   position: absolute;
   width: 100%;
   box-sizing: border-box;
-  top: 30px;
+  top: 35px;
   padding: 0 5px;
   border-radius: 5px;
   border: 1px solid gray;
-  background-color: darkgray;
+  background-color: white;
 `;
 
 const Pro = styled.div`
@@ -202,13 +213,13 @@ const Pro = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 5px;
   margin-bottom: 5px;
   width: 100%;
   cursor: pointer;
-  border-left: 1px solid transparent;
+  border-left: 3px solid transparent;
   &:hover {
-    border-left: 1px solid white;
+    border-left: 3px solid lightgray;
   }
   &:first-child {
     margin-top: 5px;
@@ -236,6 +247,33 @@ const Image = styled.img`
   }
 `;
 
+const Bottom = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  height: 33px;
+  display: ${(props) => (props.active ? "none" : "flex")};
+  align-items: center;
+  /* justify-content: space-between; */
+`;
+
+const Category = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border-right: 1px solid lightgray;
+  &:hover{
+    background-color: #f9f9f9;
+  }
+  &:last-child{
+    border-right: none;
+  }
+`;
+
 const Navbar = () => {
   const { dispatch } = useContext(MenuContext);
   const { currentUser } = useSelector((state) => state.user);
@@ -244,13 +282,25 @@ const Navbar = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
+  const [active, setActive] = useState(false);
+
+  const isActive = () => {
+    window.scrollY > 0 ? setActive(true) : setActive(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", isActive);
+    return () => {
+      window.removeEventListener("scroll", isActive);
+    };
+  }, []);
+
   useEffect(() => {
     if (text === "") return;
     const filterProducts = async () => {
       try {
         const res = await publicRequest.get(`/products?filter=${text}`);
         setFilteredProducts(res.data);
-        console.log(res.data)
       } catch (err) {
         console.log(err);
       }
@@ -276,66 +326,88 @@ const Navbar = () => {
   };
 
   return (
-    <Container>
+    <Container active={active}>
       <Wrapper>
-        <Left>
-          <MenuToggle onClick={() => dispatch({ type: "TOGGLE" })}>
-            <MenuIcon />
-          </MenuToggle>
-          <Logo onClick={() => dispatch({ type: "MENU_OFF" })} to="/">
-            Shop.
-          </Logo>
-        </Left>
-        <Center>
-          <SearchCon>
-            <SearchInput
-              onChange={(e) => setText(e.target.value)}
-              placeholder="You must type at least 2 characters for the search..."
-            />
-            <SearchIcon />
-            {filteredProducts.length > 0 && text.length > 0 && (
-              <FilteredCon>
-                {filteredProducts?.map((product, i) => (
-                  <Pro key={i} onClick={() => handleClick(product._id)} >
-                    <Text> {product.title}</Text>
-                    <Image src={product.img} />
-                  </Pro>
-                ))}
-              </FilteredCon>
+        <Top>
+          <Left>
+            <MenuToggle onClick={() => dispatch({ type: "TOGGLE" })}>
+              <MenuIcon />
+            </MenuToggle>
+            <Logo onClick={() => dispatch({ type: "MENU_OFF" })} to="/">
+              Shop.
+            </Logo>
+          </Left>
+          <Center>
+            <SearchCon>
+              <SearchInput
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Search..."
+              />
+              <SearchIcon />
+              {filteredProducts.length > 0 && text.length > 0 && (
+                <FilteredCon>
+                  {filteredProducts?.map((product, i) => (
+                    <Pro key={i} onClick={() => handleClick(product._id)}>
+                      <Text> {product.title}</Text>
+                      <Image src={product.img} />
+                    </Pro>
+                  ))}
+                </FilteredCon>
+              )}
+            </SearchCon>
+          </Center>
+          <Right>
+            {!currentUser && (
+              <>
+                <Item min="true" to="/register">
+                  Register
+                </Item>
+                <Item min="true" to="/login">
+                  Login
+                </Item>
+              </>
             )}
-          </SearchCon>
-        </Center>
-        <Right>
-          {!currentUser && (
-            <>
-              <Item min="true" to="/register">
-                Register
+            {currentUser?.data.isAdmin && (
+              <Item min="true" to="/admin">
+                Admin
               </Item>
-              <Item min="true" to="/login">
-                Login
-              </Item>
-            </>
-          )}
-          {currentUser?.data.isAdmin && (
-            <Item min="true" to="/admin">
-              Admin
-            </Item>
-          )}
-          {currentUser && (
-            <>
-              <Item min="true" to="/profile">
-                My Account
-              </Item>
-              <Item min="true" to="/profile">
-                <FavoriteIcon />
-              </Item>
-            </>
-          )}
-          <ItemIcon to="/cart">
-            <Badge full={quantity?.length > 0}>{quantity}</Badge>
-            <ShoppingCartIcon />
-          </ItemIcon>
-        </Right>
+            )}
+            {currentUser && (
+              <>
+                <Item min="true" to="/profile">
+                  My Account
+                </Item>
+                <Item min="true" to="/profile">
+                  <FavoriteIcon />
+                </Item>
+              </>
+            )}
+            <ItemIcon to="/cart">
+              <Badge full={quantity?.length > 0}>{quantity}</Badge>
+              <ShoppingCartIcon />
+            </ItemIcon>
+          </Right>
+        </Top>
+        <Bottom active={active}>
+          <Category to={`/products/phone`}>
+            <div>Phone</div>
+          </Category>
+          <Category to={`/products/laptop`}>
+            <div>Laptop</div>
+          </Category>
+          <Category to={`/products/television`}>
+            <div>Television</div>
+          </Category>
+          <Category to={`/products/tablet`}>
+            <div>Tablet</div>
+          </Category>
+          <Category to={`/products/watch`}>
+            <div>Watch</div>
+          </Category>
+          <Category to={`/products/camera`}>
+            <div>Camera</div>
+          </Category>
+        </Bottom>
       </Wrapper>
     </Container>
   );

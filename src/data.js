@@ -1,31 +1,31 @@
 export const data = [
   {
     img: "/image/canon.jpg",
-    cat: "camera",
+    cat: `/products/camera`,
     desc: "Check out new models!",
     id: 0,
   },
   {
     img: "/image/mac.jpg",
-    cat: "computer",
+    cat: `/products/laptop`,
     desc: "Discounts up to 20% for Laptops",
     id: 1,
   },
   {
     img: "/image/iphone.jpg",
-    cat: "phone",
+    cat: "/products/phone",
     desc: "Special Discount!",
     id: 2,
   },
   {
-    img: "/image/sony.jpg",
-    cat: "tv",
+    img: "/image/television.jpg",
+    cat: "/products/television",
     desc: "Check out our new models!",
     id: 3,
   },
   {
     img: "/image/watch.jpg",
-    cat: "watch",
+    cat: "/products/watch",
     desc: "watch",
     id: 4,
   },

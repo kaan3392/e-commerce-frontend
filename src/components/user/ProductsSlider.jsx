@@ -5,11 +5,12 @@ import { useState, useRef, useEffect } from "react";
 import { publicRequest } from "../../requestMethods";
 import { Link } from "react-router-dom";
 import LoadingScreen from "./LoadingScreen";
+import { ArrowLeftIcon, ArrowRightIcon } from "../../constant/icons";
 
 const Container = styled.div`
   width: 100%;
-  height: 60vh;
-  margin-top: 25px;
+  height: 70vh;
+  margin: 50px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,12 +61,13 @@ const Image = styled.img`
 
 const TextContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 5px;
 `;
 
 const Desc = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   color: black;
   font-weight: 300;
   @media only screen and (max-width: 385px) {
@@ -74,7 +76,7 @@ const Desc = styled.div`
 `;
 
 const Price = styled.div`
-  font-size: 28px;
+  font-size: 20px;
   color: black;
   font-weight: 500;
   @media only screen and (max-width: 385px) {
@@ -84,7 +86,6 @@ const Price = styled.div`
 const MainCon = styled(Main)`
   transition: all 0.7s ease;
 `;
-
 
 const ProductsSlider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -98,13 +99,13 @@ const ProductsSlider = () => {
     const getProduct = async () => {
       setLoading(true);
       try {
-        const res = await publicRequest.get("/products?newPro=true");
+        const res = await publicRequest.get("/products?price=true");
         setProducts(res.data);
       } catch (err) {
         console.log(err);
         setError(err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     };
     getProduct();
@@ -125,19 +126,19 @@ const ProductsSlider = () => {
     }px)`;
   }, [slideIndex]);
 
-  if(loading){
-    return(
+  if (loading) {
+    return (
       <Container>
-        <LoadingScreen/>
+        <LoadingScreen />
       </Container>
-    )
+    );
   }
 
   return (
     <Container>
       <Wrapper>
         <Arrow direction="left" onClick={() => handleClick("left")}>
-          <ArrowLeftOutlined />
+          <ArrowLeftIcon />
         </Arrow>
         <MainCon ref={mainRef}>
           {products?.map((p, i) => (
@@ -151,7 +152,7 @@ const ProductsSlider = () => {
           ))}
         </MainCon>
         <Arrow direction="right" onClick={() => handleClick("right")}>
-          <ArrowRightOutlined />
+          <ArrowRightIcon />
         </Arrow>
       </Wrapper>
     </Container>

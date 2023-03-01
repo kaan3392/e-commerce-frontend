@@ -5,14 +5,15 @@ import Rating from "@mui/material/Rating";
 import { Stack } from "@mui/material";
 import AddReview from "./AddReview";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { publicRequest } from "../../requestMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/cartRedux";
+import LoadingScreen from "./LoadingScreen";
 
 const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 99px);
 `;
 
 const Wrapper = styled.div`
@@ -104,7 +105,6 @@ const Right = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 `;
 
 const Cart = styled.div`
@@ -164,21 +164,6 @@ const ReviewCon = styled.div`
   border-bottom: 1px solid lightgray;
   padding: 10px 5px;
   z-index: 1;
-`;
-
-const GoBack = styled.button`
-  position: absolute;
-  padding: 9px 18px;
-  background-color: ${color};
-  color: white;
-  top: 70px;
-  left: 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  border: none;
-  &:hover {
-    background-color: gray;
-  }
 `;
 
 const AddComment = styled.button`
@@ -277,8 +262,13 @@ const ImgText = styled.div`
   align-items: center;
 `;
 
+const LoadingContainer = styled(Container)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const SinglePro = ({ id }) => {
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState(null);
   const [colorError, setColorError] = useState(false);
@@ -288,16 +278,18 @@ const SinglePro = ({ id }) => {
   const [comments, setComments] = useState([]);
   const [fireComments, setFireComments] = useState(false);
   const [message, setMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  //get product
   useEffect(() => {
     const getProduct = async () => {
+      setIsLoading(true);
       try {
         const res = await publicRequest.get("/products/" + id);
         setProduct(res.data);
-        
+
         setAvg(
           res.data.comments?.reduce(
             (acc, curr) => (acc = acc + curr.review),
@@ -309,6 +301,9 @@ const SinglePro = ({ id }) => {
         );
       } catch (err) {
         console.log(err);
+        setError(err);
+      } finally {
+        setIsLoading(false);
       }
     };
     getProduct();
@@ -334,6 +329,14 @@ const SinglePro = ({ id }) => {
     dispatch({ type: "DARKER_OFF" });
   }, [id, dispatch]);
 
+  if (isLoading) {
+    return (
+      <LoadingContainer>
+        <LoadingScreen />
+      </LoadingContainer>
+    );
+  }
+
   return (
     <Container>
       {open && (
@@ -344,7 +347,6 @@ const SinglePro = ({ id }) => {
           setOpen={setOpen}
         />
       )}
-      <GoBack onClick={() => navigate(-1)}>Go Back</GoBack>
       <Wrapper>
         <Top>
           <MainCon>

@@ -1,25 +1,33 @@
 import styled from "styled-components";
 import { data } from "../../data";
 import { useEffect, useState, useCallback } from "react";
-import { ArrowRightOutlined, ArrowLeftOutlined } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import {ArrowRightIcon, ArrowLeftIcon} from "../../constant/icons"
 
 const Container = styled.div`
   width: 100%;
-  height: 90vh;
+  height: calc(100vh - 100px);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-bottom: 40px;
+  justify-content: center;
+  /* margin-bottom: 40px; */
   @media only screen and (max-width: 768px) {
     height: 60vh;
   }
   @media only screen and (max-width: 385px) {
     height: 40vh;
   }
-`;
+  `;
 
 const Wrapper = styled.div`
-  width: 850px;
+  width: 900px;
+  height: 630px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Top = styled.div`
+  width: 900px;
   height: 500px;
   margin-top: 40px;
   display: flex;
@@ -35,7 +43,7 @@ const Wrapper = styled.div`
 export const Arrow = styled.div`
   width: 30px;
   height: 30px;
-  background-color: gray;
+  background-color: #ededed;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -47,11 +55,15 @@ export const Arrow = styled.div`
   right: ${(props) => props.direction === "right" && "10px"};
   margin: auto;
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 0.7;
   z-index: 2;
   transition: all 0.2s ease;
+  svg{
+    height: 20px;
+    width: 20px;
+  }
   &:hover {
-    transform: scale(1.3);
+    transform: scale(1.1);
   }
   @media only screen and (max-width: 385px) {
     width: 20px;
@@ -65,10 +77,12 @@ export const Main = styled.div`
   cursor: pointer;
 `;
 
-const SliderCon = styled.div`
-  width: ${(props) => (props.active ? "850px" : "0px")};
+const SliderCon = styled(Link)`
+  width: ${(props) => (props.active ? "900px" : "0px")};
   height: ${(props) => (props.active ? "500px" : "0px")};
   position: relative;
+  text-decoration: none;
+  color: inherit;
   @media only screen and (max-width: 385px) {
     width: ${(props) => (props.active ? "350px" : "0px")};
     height: ${(props) => (props.active ? "280px" : "0px")};
@@ -97,8 +111,8 @@ const Text = styled.span`
   }
 `;
 
-const ImageContainer = styled.div`
-  width: 850px;
+const Bottom = styled.div`
+  width: 900px;
   height: 120px;
   margin-top: 5px;
   display: flex;
@@ -151,28 +165,33 @@ const Slider = () => {
   return (
     <Container>
       <Wrapper>
-        <Arrow direction="left" onClick={() => handleClick("left")}>
-          <ArrowLeftOutlined />
-        </Arrow>
-        <Main>
-          {data.map((slide) => (
-            <SliderCon active={slide.id === slideIndex} key={slide.id}>
-              <Image active={slide.id === slideIndex} src={slide.img} />
-              <Text active={slide.id === slideIndex}>{slide.desc}</Text>
-            </SliderCon>
+        <Top>
+          <Arrow direction="left" onClick={() => handleClick("left")}>
+            <ArrowLeftIcon />
+          </Arrow>
+          <Main>
+            {data.map((slide) => (
+              <SliderCon to={slide.cat} active={slide.id === slideIndex} key={slide.id}>
+                <Image active={slide.id === slideIndex} src={slide.img} />
+                <Text active={slide.id === slideIndex}>{slide.desc}</Text>
+              </SliderCon>
+            ))}
+          </Main>
+          <Arrow direction="right" onClick={() => handleClick("right")}>
+            <ArrowRightIcon />
+          </Arrow>
+        </Top>
+        <Bottom>
+          {data.map((item, index) => (
+            <LittleImageContainer
+              key={index}
+              onClick={() => setSlideIndex(index)}
+            >
+              <LittleImage src={item.img} />
+            </LittleImageContainer>
           ))}
-        </Main>
-        <Arrow direction="right" onClick={() => handleClick("right")}>
-          <ArrowRightOutlined />
-        </Arrow>
+        </Bottom>
       </Wrapper>
-      <ImageContainer>
-        {data.map((item, index) => (
-          <LittleImageContainer key={index} onClick={() => setSlideIndex(index)}>
-            <LittleImage src={item.img} />
-          </LittleImageContainer>
-        ))}
-      </ImageContainer>
     </Container>
   );
 };

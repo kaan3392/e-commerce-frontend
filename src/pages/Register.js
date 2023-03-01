@@ -21,7 +21,7 @@ const Login = styled(Link)`
   font-weight: 300;
 `;
 
-export const Message = styled.span`
+export const Message = styled.div`
   color: red;
   font-weight: lighter;
 `;
@@ -37,8 +37,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(password);
-    console.log(passwordAgain);
     if (password !== passwordAgain) {
       document
         .getElementById("passwordAgain")
@@ -61,7 +59,7 @@ const Register = () => {
           setEmail("");
           setPassword("");
           setPasswordAgain("");
-        }, 2000);
+        }, 3000);
       }
     }
   };

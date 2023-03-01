@@ -83,6 +83,7 @@ export const Price = styled.span`
   font-weight: 500;
   margin-left: 5px;
   margin-bottom: 5px;
+  font-size: 20px;
 `;
 
 const LatestProducts = () => {

@@ -18,6 +18,7 @@ import { MenuContext } from "./Context/MenuContext";
 import Order from "./pages/Order";
 import OrderList from "./pages/OrderList";
 import SalesAnalytics from "./pages/SalesAnalytics";
+import NotFound from "./pages/NotFound";
 
 const overlayStyle = {
   background: "rgba(0, 0, 0, 0.4)",
@@ -56,6 +57,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/success" element={<Success />} />
+          <Route path="/*" element={<NotFound />} />
           {admin && (
             <>
               <Route path="/admin" element={<Admin />} />

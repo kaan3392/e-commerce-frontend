@@ -114,10 +114,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isEmail(user.email)) {
-      setErrorMessage("Lütfen geçerli bir mail giriniz.");
+      setErrorMessage("Please enter a valid email!");
       setTimeout(() => {
         setErrorMessage(false);
-      }, 2000);
+      }, 3000);
       setUser({ email: "", password: "" });
       return;
     }
@@ -126,7 +126,6 @@ const Login = () => {
       const res = await publicRequest.post("/auth/login", user);
       dispatch(loginSuccess(res.data));
     } catch (err) {
-      console.log("err***********", err);
       dispatch(loginFailure(err.response.data.message));
       setErrorMessage(error);
     } finally {
@@ -137,7 +136,6 @@ const Login = () => {
     }
   };
 
-  console.log(error);
   return (
     <>
       <Navbar />
