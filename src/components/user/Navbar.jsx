@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100%;
   @media only screen and (max-width: 768px) {
-    padding: 0px 15px;
+    padding: 0px 20px;
   }
 `;
 
@@ -50,7 +50,10 @@ const Left = styled.div`
   flex: 2;
   display: flex;
   align-items: center;
-  @media only screen and (max-width: 385px) {
+  @media only screen and (max-width: 768px) {
+    flex:1.5;
+  }
+  @media only screen and (max-width: 480px) {
     flex: 1;
   }
   svg {
@@ -73,14 +76,18 @@ const Logo = styled(Link)`
   cursor: pointer;
   margin-left: 10px;
   text-decoration: none;
-  @media only screen and (max-width: 385px) {
+
+  @media only screen and (max-width: 480px) {
     display: none;
   }
 `;
 
 const MenuToggle = styled.div`
-  display: flex;
+  display: none;
   align-items: center;
+  @media only screen and (max-width: 768px) {
+  display: flex;
+}
   svg {
     fill: black;
     height: 18px;
@@ -93,8 +100,11 @@ const MenuToggle = styled.div`
 
 const Center = styled.div`
   flex: 3;
-  @media only screen and (max-width: 385px) {
-    flex: 5;
+  @media only screen and (max-width: 768px) {
+    flex:5;
+  }
+  @media only screen and (max-width: 480px) {
+    flex: 6;
   }
 `;
 
@@ -133,7 +143,7 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  @media only screen and (max-width: 385px) {
+  @media only screen and (max-width: 480px) {
     flex: 1;
   }
   svg {
@@ -163,7 +173,7 @@ const Item = styled(Link)`
   @media only screen and (max-width: 768px) {
     margin-left: 10px;
   }
-  @media only screen and (max-width: 385px) {
+  @media only screen and (max-width: 480px) {
     display: ${(props) => props.min && "none"};
     margin-left: 5px;
   }
@@ -266,6 +276,9 @@ const Category = styled(Link)`
   justify-content: center;
   height: 100%;
   border-right: 1px solid lightgray;
+  @media only screen and (max-width: 480px) {
+  font-size: 14px;
+}
   &:hover{
     background-color: #f9f9f9;
   }
@@ -377,7 +390,7 @@ const Navbar = () => {
                 <Item min="true" to="/profile">
                   My Account
                 </Item>
-                <Item min="true" to="/profile">
+                <Item to="/profile">
                   <FavoriteIcon />
                 </Item>
               </>

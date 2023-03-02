@@ -8,8 +8,8 @@ import { logout } from "../../redux/userRedux";
 const Container = styled.div`
   display: flex;
   position: fixed;
-  width: 350px;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 10;
   left: ${(props) => (props.menu ? "0px" : "-350px")};
   background-color: #232f3e;

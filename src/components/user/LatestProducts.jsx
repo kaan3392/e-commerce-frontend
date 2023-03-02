@@ -14,13 +14,14 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 80%;
-  @media only screen and (max-width: 768px) {
-    padding: 0 100px;
-  }
-  @media only screen and (max-width: 385px) {
-    padding: 0px 50px;
-  }
+  width: 95%;
+  max-width: 1100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
 `;
 
 export const Main = styled.div`
@@ -29,13 +30,14 @@ export const Main = styled.div`
   flex-wrap: wrap;
   gap: 20px;
   @media only screen and (max-width: 768px) {
-    justify-content: flex-start;
+    justify-content: space-around;
+    /* gap: 20px; */
   }
 `;
 
 export const Frame = styled(Link)`
   display: flex;
-  width: 350px;
+  width: 30%;
   border-radius: 10px;
   border: 1px solid lightgray;
   flex-direction: column;
@@ -49,7 +51,10 @@ export const Frame = styled(Link)`
     box-shadow: 3px 2px 11px 1px rgba(0, 0, 0, 0.2);
   }
   @media only screen and (max-width: 768px) {
-    width: 250px;
+    width: 45%;
+  }
+  @media only screen and (max-width: 480px) {
+    width: 80%;
   }
 `;
 

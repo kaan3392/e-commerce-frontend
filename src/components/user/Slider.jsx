@@ -2,40 +2,58 @@ import styled from "styled-components";
 import { data } from "../../data";
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import {ArrowRightIcon, ArrowLeftIcon} from "../../constant/icons"
+import { ArrowRightIcon, ArrowLeftIcon } from "../../constant/icons";
 
 const Container = styled.div`
   width: 100%;
-  height: calc(100vh - 100px);
+  min-height: calc(100vh - 99px);
   display: flex;
   align-items: center;
   justify-content: center;
-  /* margin-bottom: 40px; */
+
   @media only screen and (max-width: 768px) {
-    height: 60vh;
+    height: calc(60vh - 99px);
+    margin: 20px 0px;
+  }
+  @media only screen and (max-width: 480px) {
+    height: calc(50vh - 99px);
+    margin: 10px 0px;
   }
   @media only screen and (max-width: 385px) {
-    height: 40vh;
+    height: calc(40vh - 99px);
   }
-  `;
+`;
 
 const Wrapper = styled.div`
-  width: 900px;
-  height: 630px;
+  width: 95%;
+  max-width: 900px;
+  min-height:630px;
   display: flex;
   flex-direction: column;
+  @media only screen and (max-width: 480px) {
+    min-height:500px;
+  }
 `;
 
 const Top = styled.div`
-  width: 900px;
+  width: 100%;
   height: 500px;
   margin-top: 40px;
   display: flex;
   overflow: hidden;
   position: relative;
   border-radius: 10px;
+ 
+  @media only screen and (max-width: 768px) {
+    /* min-height:400px; */
+    margin-top: 20px;
+  }
+  @media only screen and (max-width: 480px) {
+    height:400px;
+    margin-top: 10px;
+  }
+  
   @media only screen and (max-width: 385px) {
-    width: 350px;
     height: 280px;
   }
 `;
@@ -58,7 +76,7 @@ export const Arrow = styled.div`
   opacity: 0.7;
   z-index: 2;
   transition: all 0.2s ease;
-  svg{
+  svg {
     height: 20px;
     width: 20px;
   }
@@ -72,26 +90,27 @@ export const Arrow = styled.div`
 `;
 
 export const Main = styled.div`
-  height: 100%;
+  width: 100%;
+  min-height: 100%;
   display: flex;
   cursor: pointer;
 `;
 
 const SliderCon = styled(Link)`
-  width: ${(props) => (props.active ? "900px" : "0px")};
-  height: ${(props) => (props.active ? "500px" : "0px")};
+  width: ${(props) => (props.active ? "100%" : "0px")};
+  min-height: ${(props) => (props.active ? "100%" : "0px")};
   position: relative;
   text-decoration: none;
   color: inherit;
-  @media only screen and (max-width: 385px) {
+  /* @media only screen and (max-width: 385px) {
     width: ${(props) => (props.active ? "350px" : "0px")};
     height: ${(props) => (props.active ? "280px" : "0px")};
-  }
+  } */
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   object-fit: cover;
   opacity: ${(props) => (props.active ? 1 : 0)};
   transition: all 0.5s ease;
@@ -112,14 +131,16 @@ const Text = styled.span`
 `;
 
 const Bottom = styled.div`
-  width: 900px;
-  height: 120px;
+  width: 100%;
+ height: 120px;
   margin-top: 5px;
   display: flex;
-  align-items: center;
   border-radius: 5px;
   overflow: hidden;
   gap: 5px;
+  @media only screen and (max-width: 480px) {
+    height: 80px;
+  }
 `;
 
 const LittleImageContainer = styled.div`
@@ -171,7 +192,11 @@ const Slider = () => {
           </Arrow>
           <Main>
             {data.map((slide) => (
-              <SliderCon to={slide.cat} active={slide.id === slideIndex} key={slide.id}>
+              <SliderCon
+                to={slide.cat}
+                active={slide.id === slideIndex}
+                key={slide.id}
+              >
                 <Image active={slide.id === slideIndex} src={slide.img} />
                 <Text active={slide.id === slideIndex}>{slide.desc}</Text>
               </SliderCon>
