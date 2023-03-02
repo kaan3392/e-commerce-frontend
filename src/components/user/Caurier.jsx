@@ -7,11 +7,12 @@ import {
   CallCenterIcon,
   FastTruckIcon,
 } from "../../constant/icons";
+import {color} from "../../constant/colors"
 
 const Container = styled.div`
   width: 100%;
   height: 250px;
-  background-color: #003177;
+  background-color: ${color};
   margin-top: 100px;
   display: flex;
   align-items: center;
@@ -62,6 +63,12 @@ const Text = styled.div`
   flex: 1;
   @media only screen and (max-width: 768px) {
     font-size: 20px;
+  }
+  @media only screen and (max-width: 480px) {
+    font-size: 18px;
+  }
+  @media only screen and (max-width: 425px) {
+    font-size: 16px;
   }
 `;
 

@@ -14,20 +14,20 @@ const Wrapper = styled.div`
 `;
 const Top = styled.div`
   display: flex;
-  gap: 25px;
-  @media only screen and (max-width: 768px) {
   gap: 20px;
-}
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
-// const ItemContainer=styled.div`
-// display: flex;
-// flex:1;
-// gap: 25px;
-// @media only screen and (max-width: 768px) {
-//   flex-direction: column;
-// }
-// `
+const TopContainer = styled.div`
+display: flex;
+flex: 1;
+gap: 20px;
+  @media only screen and (max-width: 480px) {
+    flex-direction: ${props => props.long && "column"};
+  }
+`;
 const Item = styled.div`
   flex: 1;
   display: flex;
@@ -42,7 +42,8 @@ const Item = styled.div`
     color: #555;
   }
 
-  span {
+  span,
+  div {
     color: gray;
   }
 `;
@@ -71,8 +72,14 @@ const Copyright = styled.div`
   color: gray;
 `;
 const Right = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
   img {
     height: 50px;
+    @media only screen and (max-width: 480px) {
+    width: 80%;
+  }
   }
 `;
 const Footer = () => {
@@ -80,41 +87,45 @@ const Footer = () => {
     <Container>
       <Wrapper>
         <Top>
-          <Item>
-            <h1>Categories</h1>
-            <span>Laptops</span>
-            <span>Phones</span>
-            <span>Television</span>
-            <span>Tablet</span>
-            <span>Camera</span>
-            <span>Watch</span>
-          </Item>
-          <Item>
-            <h1>Links</h1>
-            <span>FAQ</span>
-            <span>Pages</span>
-            <span>Stores</span>
-            <span>Compare</span>
-            <span>Cookies</span>
-          </Item>
-
-          <Item>
-            <h1>About</h1>
-            <span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-              cupiditate optio, velit magnam neque fuga sequi consequuntur quod
-              deserunt ab alias, tenetur, architecto saepe quos totam amet harum
-              quasi nobis!
-            </span>
-          </Item>
-          <Item>
-            <h1>Contact</h1>
-            <span>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod
-              magni eum quia recusandae quis sint inventore nulla autem sequi
-              mollitia.
-            </span>
-          </Item>
+          
+          <TopContainer>
+            <Item>
+              <h1>Categories</h1>
+              <span>Laptops</span>
+              <span>Phones</span>
+              <span>Television</span>
+              <span>Tablet</span>
+              <span>Camera</span>
+              <span>Watch</span>
+            </Item>
+            <Item>
+              <h1>Links</h1>
+              <span>FAQ</span>
+              <span>Pages</span>
+              <span>Stores</span>
+              <span>Compare</span>
+              <span>Cookies</span>
+            </Item>
+          </TopContainer>
+          <TopContainer long={true}>
+            <Item>
+              <h1>About</h1>
+              <div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Inventore cupiditate optio, velit magnam neque fuga sequi
+                consequuntur quod deserunt ab alias, tenetur, architecto saepe
+                quos totam amet harum quasi nobis!
+              </div>
+            </Item>
+            <Item>
+              <h1>Contact</h1>
+              <div>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod
+                magni eum quia recusandae quis sint inventore nulla autem sequi
+                mollitia.
+              </div>
+            </Item>
+          </TopContainer>
         </Top>
         <Bottom>
           <Left>

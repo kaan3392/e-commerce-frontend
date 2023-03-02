@@ -37,7 +37,7 @@ function App() {
   const { darker } = useContext(MenuContext);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", }}>
       <div style={darker ? overlayStyle : undefined} />
       <BrowserRouter>
         <Routes>

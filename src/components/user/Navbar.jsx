@@ -5,6 +5,9 @@ import {
   SearchIcon,
   ShoppingCartIcon,
 } from "../../constant/icons";
+import {
+  color
+} from "../../constant/colors";
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,9 +22,10 @@ const Container = styled.div`
   height: 99px;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 99;
   backdrop-filter: blur(10px);
 `;
+
 
 const Wrapper = styled.div`
   max-width: 1200px;
@@ -31,7 +35,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100%;
   @media only screen and (max-width: 768px) {
-    padding: 0px 20px;
+    padding: 0px 10px;
   }
 `;
 
@@ -70,15 +74,18 @@ const Left = styled.div`
 
 const Logo = styled(Link)`
   font-size: 25px;
-  color: black;
+  color: ${color};
+  text-decoration: underline;
   font-family: "Tapestry", cursive;
   letter-spacing: 1px;
   cursor: pointer;
   margin-left: 10px;
-  text-decoration: none;
+  /* text-decoration: none; */
+  display: ${props=> props.sm && "none"};
 
   @media only screen and (max-width: 480px) {
-    display: none;
+    display: ${props=> props.sm ? "block" :"none"};
+    margin-left: 5px;
   }
 `;
 
@@ -101,10 +108,10 @@ const MenuToggle = styled.div`
 const Center = styled.div`
   flex: 3;
   @media only screen and (max-width: 768px) {
-    flex:5;
+    flex:4;
   }
   @media only screen and (max-width: 480px) {
-    flex: 6;
+    flex: 4.5;
   }
 `;
 
@@ -279,6 +286,9 @@ const Category = styled(Link)`
   @media only screen and (max-width: 480px) {
   font-size: 14px;
 }
+  @media only screen and (max-width: 425px) {
+  font-size: 12px;
+}
   &:hover{
     background-color: #f9f9f9;
   }
@@ -340,6 +350,7 @@ const Navbar = () => {
 
   return (
     <Container active={active}>
+      
       <Wrapper>
         <Top>
           <Left>
@@ -348,6 +359,9 @@ const Navbar = () => {
             </MenuToggle>
             <Logo onClick={() => dispatch({ type: "MENU_OFF" })} to="/">
               Shop.
+            </Logo>
+            <Logo sm={true} onClick={() => dispatch({ type: "MENU_OFF" })} to="/">
+              S.
             </Logo>
           </Left>
           <Center>

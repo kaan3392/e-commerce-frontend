@@ -7,7 +7,7 @@ import LoadingScreen from "./LoadingScreen";
 
 const Container = styled.div`
   width: 100%;
-  min-height:50vh;
+  min-height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +21,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
 `;
 
 export const Main = styled.div`
@@ -29,9 +28,9 @@ export const Main = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
+  height: 100%;
   @media only screen and (max-width: 768px) {
     justify-content: space-around;
-    /* gap: 20px; */
   }
 `;
 
@@ -54,7 +53,7 @@ export const Frame = styled(Link)`
     width: 45%;
   }
   @media only screen and (max-width: 480px) {
-    width: 80%;
+    width: 70%;
   }
 `;
 
@@ -62,6 +61,12 @@ export const Image = styled.img`
   width: 90%;
   object-fit: contain;
   height: 300px;
+  @media only screen and (max-width: 768px) {
+    height: 250px;
+  }
+  @media only screen and (max-width: 480px) {
+    height: 200px;
+  }
 `;
 
 export const Review = styled.div`
@@ -112,12 +117,12 @@ const LatestProducts = () => {
     getProducts();
   }, []);
 
-  if(loading){
-    return(
+  if (loading) {
+    return (
       <Container>
-        <LoadingScreen/>
+        <LoadingScreen />
       </Container>
-    )
+    );
   }
 
   return (

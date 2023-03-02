@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <>
     <Navbar/>
-    {/* <Menu/> */}
+    <Menu/>
     <Slider/>
     <ProductsSlider/>
     <LatestProducts/>

@@ -6,54 +6,56 @@ import { ArrowRightIcon, ArrowLeftIcon } from "../../constant/icons";
 
 const Container = styled.div`
   width: 100%;
-  min-height: calc(100vh - 99px);
+  height: calc(100vh - 99px);
   display: flex;
   align-items: center;
   justify-content: center;
-
+  margin-top: 10px;
   @media only screen and (max-width: 768px) {
-    height: calc(60vh - 99px);
-    margin: 20px 0px;
+    height: calc(80vh - 99px);
+    
   }
   @media only screen and (max-width: 480px) {
-    height: calc(50vh - 99px);
-    margin: 10px 0px;
+    height: calc(60vh - 99px);
+    margin-top: 5px 0px;
   }
-  @media only screen and (max-width: 385px) {
-    height: calc(40vh - 99px);
+  @media only screen and (max-width: 425px) {
+    height: calc(50vh - 99px);
   }
 `;
 
 const Wrapper = styled.div`
-  width: 95%;
+  width: 100%;
   max-width: 900px;
-  min-height:630px;
+  height: 95%;
   display: flex;
   flex-direction: column;
-  @media only screen and (max-width: 480px) {
+  /* @media only screen and (max-width: 768px) {
     min-height:500px;
   }
+  @media only screen and (max-width: 480px) {
+   height:400px;
+  } */
 `;
 
 const Top = styled.div`
   width: 100%;
-  height: 500px;
-  margin-top: 40px;
+  height: 85%;
   display: flex;
   overflow: hidden;
   position: relative;
   border-radius: 10px;
- 
+
   @media only screen and (max-width: 768px) {
     /* min-height:400px; */
     margin-top: 20px;
   }
   @media only screen and (max-width: 480px) {
-    height:400px;
+    /* height:400px; */
     margin-top: 10px;
   }
-  
-  @media only screen and (max-width: 385px) {
+
+  @media only screen and (max-width: 425px) {
     height: 280px;
   }
 `;
@@ -102,10 +104,6 @@ const SliderCon = styled(Link)`
   position: relative;
   text-decoration: none;
   color: inherit;
-  /* @media only screen and (max-width: 385px) {
-    width: ${(props) => (props.active ? "350px" : "0px")};
-    height: ${(props) => (props.active ? "280px" : "0px")};
-  } */
 `;
 
 const Image = styled.img`
@@ -132,14 +130,17 @@ const Text = styled.span`
 
 const Bottom = styled.div`
   width: 100%;
- height: 120px;
+  height: 15%;
   margin-top: 5px;
   display: flex;
   border-radius: 5px;
   overflow: hidden;
   gap: 5px;
   @media only screen and (max-width: 480px) {
-    height: 80px;
+    /* height: 80px; */
+  }
+  @media only screen and (max-width: 480px) {
+    /* height: 50px; */
   }
 `;
 
@@ -162,14 +163,14 @@ const Slider = () => {
 
   const handleClick = (direction) => {
     if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 4);
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 5);
     } else {
-      setSlideIndex(slideIndex < 4 ? slideIndex + 1 : 0);
+      setSlideIndex(slideIndex < 5 ? slideIndex + 1 : 0);
     }
   };
 
   const onClick = useCallback(() => {
-    if (slideIndex < 4) {
+    if (slideIndex < 5) {
       setSlideIndex((prev) => prev + 1);
     } else {
       setSlideIndex(0);

@@ -19,7 +19,7 @@ const Container = styled.div`
     margin: 40px 0px;
   }
   @media only screen and (max-width: 480px) {
-    height: 200px;
+    height: 250px;
     margin: 30px 0px;
   }
 `;
@@ -61,6 +61,10 @@ const Frame = styled(Link)`
   }
   @media only screen and (max-width: 480px) {
     min-width: 50%;
+    padding: 0;
+  }
+  @media only screen and (max-width: 425px) {
+    min-width: 100%;
     padding: 0;
   }
 `;
