@@ -31,13 +31,6 @@ const Wrapper = styled.div`
   position: relative;
   overflow: hidden;
   box-shadow: 0px 0px 12px -1px rgba(0, 0, 0, 0.14);
-  /* @media only screen and (max-width: 768px) {
-    width: 80%;
-    display: flex;
-  } */
-  @media only screen and (max-width: 385px) {
-    /* width: 75%; */
-  }
 `;
 
 const MainCon = styled(Main)`

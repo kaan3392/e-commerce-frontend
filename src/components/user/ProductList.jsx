@@ -1,14 +1,7 @@
-import { Rating } from "@mui/material";
 import { useState, useMemo } from "react";
 import styled from "styled-components";
-import {
-  Frame,
-  Image,
-  Main,
-  Price,
-  Review,
-  ReviewText,
-} from "./LatestProducts";
+import Products from "./Products";
+
 
 const Top = styled.div`
   margin-bottom: 50px;
@@ -24,14 +17,14 @@ const PriceFilter = styled.select`
   border-radius: 5px;
 `;
 
-const Title = styled.div`
-  font-size: ${(props) => (props.cat ? "35px" : "18px")};
-  margin-left: 5px;
-  margin-bottom: ${(props) => (props.cat ? "15px" : "5px")};
-  font-weight: 500;
-  color: #232f3e;
-  padding-left: ${(props) => props.cat && "15px"};
-`;
+// const Title = styled.div`
+//   font-size: ${(props) => (props.cat ? "35px" : "18px")};
+//   margin-left: 5px;
+//   margin-bottom: ${(props) => (props.cat ? "15px" : "5px")};
+//   font-weight: 500;
+//   color: #232f3e;
+//   padding-left: ${(props) => props.cat && "15px"};
+// `;
 
 const ProductList = ({ category, products }) => {
   const catName = category.toUpperCase();
@@ -68,30 +61,7 @@ const ProductList = ({ category, products }) => {
         </PriceFilter>
       </Top>
       <div>
-        <Title cat>{catName}S</Title>
-        <Main>
-          {filProducts?.map((p, i) => (
-            <Frame to={`/product/${p._id}`} key={i}>
-              <Image src={p.img} />
-              <Title>{p.title}</Title>
-              <Review>
-                <Rating
-                  name="half-rating-read"
-                  value={
-                    p.comments?.reduce(
-                      (acc, curr) => (acc = acc + curr.review),
-                      0
-                    ) / p.comments?.length || 0
-                  }
-                  precision={0.5}
-                  readOnly
-                />
-                <ReviewText>{p.comments?.length} review</ReviewText>
-              </Review>
-              <Price>{p.price}$</Price>
-            </Frame>
-          ))}
-        </Main>
+        <Products title={catName} products={filProducts} />
       </div>
     </>
   );

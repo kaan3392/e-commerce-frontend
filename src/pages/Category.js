@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import LoadingScreen from "../components/user/LoadingScreen";
+import Caurier from "../components/user/Caurier";
+import Footer from "../components/user/Footer";
 import Menu from "../components/user/Menu";
 import Navbar from "../components/user/Navbar";
 import ProductList from "../components/user/ProductList";
@@ -11,18 +13,14 @@ import { publicRequest } from "../requestMethods";
 export const Container = styled.div`
   width: 100%;
   display: flex;
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - 99pxpx);
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
 `;
 export const Wrapper = styled.div`
-  padding: 20px 150px;
-  @media only screen and (max-width: 768px) {
-    padding: 20px 50px;
-  }
-`;
-
-const LoadingContainer = styled(Container)`
-  align-content: center;
-  justify-content: center;
+  width: 95%;
+  max-width: 1100px;
 `;
 
 const Category = () => {
@@ -51,9 +49,7 @@ const Category = () => {
 
   if (isLoading) {
     return (
-      <LoadingContainer>
         <LoadingScreen />
-      </LoadingContainer>
     );
   }
 
@@ -66,6 +62,8 @@ const Category = () => {
           <ProductList products={products} category={cat} />
         </Wrapper>
       </Container>
+      <Caurier />
+      <Footer />
     </>
   );
 };

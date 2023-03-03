@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
 const Container = styled.div`
+   width: 100%;
   display: flex;
+  min-height: calc(100vh - 99px);
   align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  align-content: center;
   justify-content: center;
 `;
 
