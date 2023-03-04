@@ -30,8 +30,8 @@ const Wrapper = styled.div`
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0px 0px 12px -1px rgba(0, 0, 0, 0.14);
-`;
+  border: 1px solid lightgray;
+  `;
 
 const MainCon = styled(Main)`
   transition: all 0.5s ease;

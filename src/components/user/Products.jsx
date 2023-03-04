@@ -33,7 +33,7 @@ export const Main = styled.div`
     justify-content: space-between;
   }
   @media only screen and (max-width: 480px) {
-    justify-content: space-between;
+    justify-content: center;
   }
 `;
 
@@ -56,7 +56,7 @@ export const Frame = styled(Link)`
     width: 48%;
   }
   @media only screen and (max-width: 480px) {
-    width: 100%;
+    width: 80%;
   }
 `;
 

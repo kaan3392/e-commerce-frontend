@@ -1,5 +1,7 @@
 import Navbar from "../components/user/Navbar";
 import Menu from "../components/user/Menu";
+import Caurier from "../components/user/Caurier";
+import Footer from "../components/user/Footer";
 import SinglePro from "../components/user/SinglePro";
 import { useLocation } from "react-router-dom";
 
@@ -12,6 +14,8 @@ const SingleProduct = () => {
       <Navbar />
       <Menu />
       <SinglePro id={id} />
+      <Caurier/>
+      <Footer />
     </>
   );
 };

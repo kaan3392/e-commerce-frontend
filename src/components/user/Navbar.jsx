@@ -5,9 +5,7 @@ import {
   SearchIcon,
   ShoppingCartIcon,
 } from "../../constant/icons";
-import {
-  color
-} from "../../constant/colors";
+import { color } from "../../constant/colors";
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,7 +23,6 @@ const Container = styled.div`
   z-index: 99;
   backdrop-filter: blur(10px);
 `;
-
 
 const Wrapper = styled.div`
   max-width: 1200px;
@@ -47,7 +44,7 @@ const Top = styled.div`
   justify-content: space-between;
   align-self: ${(props) => props.active && "flex-start"};
   height: 66px;
-  border-bottom: 1px solid lightgray;
+  border-bottom: ${(props) => (props.active ? "none" : "1px solid lightgray")};
 `;
 
 const Left = styled.div`
@@ -55,7 +52,7 @@ const Left = styled.div`
   display: flex;
   align-items: center;
   @media only screen and (max-width: 768px) {
-    flex:1.5;
+    flex: 1.5;
   }
   @media only screen and (max-width: 480px) {
     flex: 1;
@@ -81,10 +78,10 @@ const Logo = styled(Link)`
   cursor: pointer;
   margin-left: 10px;
   /* text-decoration: none; */
-  display: ${props=> props.sm && "none"};
+  display: ${(props) => props.sm && "none"};
 
   @media only screen and (max-width: 480px) {
-    display: ${props=> props.sm ? "block" :"none"};
+    display: ${(props) => (props.sm ? "block" : "none")};
     margin-left: 5px;
   }
 `;
@@ -93,8 +90,8 @@ const MenuToggle = styled.div`
   display: none;
   align-items: center;
   @media only screen and (max-width: 768px) {
-  display: flex;
-}
+    display: flex;
+  }
   svg {
     fill: black;
     height: 18px;
@@ -108,7 +105,7 @@ const MenuToggle = styled.div`
 const Center = styled.div`
   flex: 3;
   @media only screen and (max-width: 768px) {
-    flex:4;
+    flex: 4;
   }
   @media only screen and (max-width: 480px) {
     flex: 4.5;
@@ -284,15 +281,15 @@ const Category = styled(Link)`
   height: 100%;
   border-right: 1px solid lightgray;
   @media only screen and (max-width: 480px) {
-  font-size: 14px;
-}
+    font-size: 14px;
+  }
   @media only screen and (max-width: 425px) {
-  font-size: 12px;
-}
-  &:hover{
+    font-size: 12px;
+  }
+  &:hover {
     background-color: #f9f9f9;
   }
-  &:last-child{
+  &:last-child {
     border-right: none;
   }
 `;
@@ -349,10 +346,9 @@ const Navbar = () => {
   };
 
   return (
-    <Container active={active}>
-      
+    <Container>
       <Wrapper>
-        <Top>
+        <Top active={active}>
           <Left>
             <MenuToggle onClick={() => dispatch({ type: "TOGGLE" })}>
               <MenuIcon />
@@ -360,7 +356,11 @@ const Navbar = () => {
             <Logo onClick={() => dispatch({ type: "MENU_OFF" })} to="/">
               Shop.
             </Logo>
-            <Logo sm={true} onClick={() => dispatch({ type: "MENU_OFF" })} to="/">
+            <Logo
+              sm={true}
+              onClick={() => dispatch({ type: "MENU_OFF" })}
+              to="/"
+            >
               S.
             </Logo>
           </Left>

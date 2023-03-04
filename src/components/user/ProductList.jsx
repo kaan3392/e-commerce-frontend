@@ -17,15 +17,6 @@ const PriceFilter = styled.select`
   border-radius: 5px;
 `;
 
-// const Title = styled.div`
-//   font-size: ${(props) => (props.cat ? "35px" : "18px")};
-//   margin-left: 5px;
-//   margin-bottom: ${(props) => (props.cat ? "15px" : "5px")};
-//   font-weight: 500;
-//   color: #232f3e;
-//   padding-left: ${(props) => props.cat && "15px"};
-// `;
-
 const ProductList = ({ category, products }) => {
   const catName = category.toUpperCase();
   const [filterRange, setFilterRange] = useState(["0", "10000"]);
