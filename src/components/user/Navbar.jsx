@@ -357,7 +357,7 @@ const Navbar = () => {
               Shop.
             </Logo>
             <Logo
-              sm={true}
+              sm="true"
               onClick={() => dispatch({ type: "MENU_OFF" })}
               to="/"
             >

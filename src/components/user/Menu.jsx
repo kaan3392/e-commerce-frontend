@@ -162,6 +162,7 @@ const Menu = ({ admin }) => {
               <ItemContainer
                 onClick={() => dispatch({ type: "TOGGLE" })}
                 to={item.cat}
+                key={i}
               >
                 <Left>
                   <ItemImage src={item.img} />

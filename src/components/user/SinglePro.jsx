@@ -172,7 +172,6 @@ const Color = styled.div`
   background-color: ${(props) => props.c};
   opacity: ${(props) => props.a ? "" :"0.5"};
   padding: ${(props) => props.a && "2px"};
-  /* border: ${(props) => props.a && "2px solid tomato"}; */
   cursor: pointer;
   &:hover {
     transform: scale(1.15);
@@ -196,6 +195,7 @@ const Message = styled.div`
 `;
 
 const SinglePro = ({ id }) => {
+  const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState(null);
   const [colorError, setColorError] = useState(false);
@@ -215,7 +215,6 @@ const SinglePro = ({ id }) => {
       try {
         const res = await publicRequest.get("/products/" + id);
         setProduct(res.data);
-        console.log(res.data);
 
         setAvg(
           res.data.comments?.reduce(
@@ -256,8 +255,15 @@ const SinglePro = ({ id }) => {
     dispatch({ type: "DARKER_OFF" });
   }, [id, dispatch]);
 
+
+  // console.log(product.img[0])
+
   if (isLoading) {
     return <LoadingScreen />;
+  }
+
+  if(error){
+    return <p>Something went wrong</p>
   }
 
   return (
@@ -276,11 +282,11 @@ const SinglePro = ({ id }) => {
             <ImageWrapper>
               <LittleImageContainer>
                 {product?.img?.map((item, i) => (
-                  <LittleImage key={i} src={item} />
+                  <LittleImage onClick={()=> setIndex(i)} key={i} src={item} />
                 ))}
               </LittleImageContainer>
               <BigImageContainer>
-                <BigImage src={product.img} />
+                <BigImage src={product?.img?.[index]} />
               </BigImageContainer>
             </ImageWrapper>
           </ImageContainer>
