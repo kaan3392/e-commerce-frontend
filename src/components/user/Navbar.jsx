@@ -9,8 +9,9 @@ import { color } from "../../constant/colors";
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "../../Context/MenuContext";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { publicRequest } from "../../requestMethods";
+import { logout } from "../../redux/userRedux";
 
 const Container = styled.div`
   display: flex;
@@ -77,7 +78,6 @@ const Logo = styled(Link)`
   letter-spacing: 1px;
   cursor: pointer;
   margin-left: 10px;
-  /* text-decoration: none; */
   display: ${(props) => props.sm && "none"};
 
   @media only screen and (max-width: 480px) {
@@ -143,7 +143,7 @@ const SearchInput = styled.input`
 `;
 
 const Right = styled.div`
-  flex: 2;
+  flex: ${(props) => (props.currentUser ? 2.5 : 2)};
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -267,7 +267,6 @@ const Bottom = styled.div`
   height: 33px;
   display: ${(props) => (props.active ? "none" : "flex")};
   align-items: center;
-  /* justify-content: space-between; */
 `;
 
 const Category = styled(Link)`
@@ -294,13 +293,14 @@ const Category = styled(Link)`
   }
 `;
 
-const Navbar = () => {
+const Navbar = ({ admin }) => {
   const { dispatch } = useContext(MenuContext);
   const { currentUser } = useSelector((state) => state.user);
   const { quantity } = useSelector((state) => state.cart);
   const [text, setText] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
+  const reduxDispatch = useDispatch();
 
   const [active, setActive] = useState(false);
 
@@ -383,7 +383,7 @@ const Navbar = () => {
               )}
             </SearchCon>
           </Center>
-          <Right>
+          <Right currentUser={currentUser}>
             {!currentUser && (
               <>
                 <Item min="true" to="/register">
@@ -404,6 +404,9 @@ const Navbar = () => {
                 <Item min="true" to="/profile">
                   My Account
                 </Item>
+                <Item min="true" onClick={() => reduxDispatch(logout())} to="/">
+                  Logout
+                </Item>
                 <Item to="/profile">
                   <FavoriteIcon />
                 </Item>
@@ -415,26 +418,28 @@ const Navbar = () => {
             </ItemIcon>
           </Right>
         </Top>
-        <Bottom active={active}>
-          <Category to={`/products/phone`}>
-            <div>Phone</div>
-          </Category>
-          <Category to={`/products/laptop`}>
-            <div>Laptop</div>
-          </Category>
-          <Category to={`/products/television`}>
-            <div>Television</div>
-          </Category>
-          <Category to={`/products/tablet`}>
-            <div>Tablet</div>
-          </Category>
-          <Category to={`/products/watch`}>
-            <div>Watch</div>
-          </Category>
-          <Category to={`/products/camera`}>
-            <div>Camera</div>
-          </Category>
-        </Bottom>
+        {!admin && (
+          <Bottom active={active}>
+            <Category to={`/products/phone`}>
+              <div>Phone</div>
+            </Category>
+            <Category to={`/products/laptop`}>
+              <div>Laptop</div>
+            </Category>
+            <Category to={`/products/television`}>
+              <div>Television</div>
+            </Category>
+            <Category to={`/products/tablet`}>
+              <div>Tablet</div>
+            </Category>
+            <Category to={`/products/watch`}>
+              <div>Watch</div>
+            </Category>
+            <Category to={`/products/camera`}>
+              <div>Camera</div>
+            </Category>
+          </Bottom>
+        )}
       </Wrapper>
     </Container>
   );

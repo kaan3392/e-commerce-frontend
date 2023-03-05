@@ -3,25 +3,28 @@ import styled from "styled-components";
 import moment from "moment";
 
 const Container = styled.div`
-  padding: 10px;
+  display: flex;
+  
+`;
+const Wrapper = styled.div`
   border-bottom: 1px solid lightgray;
   display: flex;
   flex-direction: column;
-  @media only screen and (max-width: 385px) {
-padding: 5px;
-}
+  width: 90%;
 `;
 const StarCon = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   @media only screen and (max-width: 385px) {
-flex-direction: column;
-align-items: flex-start;
-}
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 const Star = styled.span`
   margin-right: 10px;
+  display: flex;
+  align-items: center;
 `;
 const Name = styled.h4`
   margin-bottom: 10px;
@@ -37,18 +40,20 @@ const Time = styled.div`
   margin-bottom: 10px;
 `;
 
-export default function Review({ c }) {
+export default function Review({ comment }) {
   return (
     <Container>
-      <Name>{c.sender}</Name>
-      <Time>{moment(c.createdAt).fromNow()}</Time>
-      <StarCon>
-        <Star>
-          <Rating name="read-only" value={c.review} readOnly />
-        </Star>
-        <Title>{c.title}</Title>
-      </StarCon>
-      <Desc>{c.desc}</Desc>
+      <Wrapper>
+        <Name>{comment?.senderId?.username}</Name>
+        <Time>{moment(comment.createdAt).fromNow()}</Time>
+        <StarCon>
+          <Star>
+            <Rating name="read-only" value={comment.review} readOnly />
+          </Star>
+          <Title>{comment.title}</Title>
+        </StarCon>
+        <Desc>{comment.desc}</Desc>
+      </Wrapper>
     </Container>
   );
 }

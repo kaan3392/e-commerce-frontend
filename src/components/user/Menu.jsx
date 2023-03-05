@@ -141,16 +141,11 @@ const Menu = ({ admin }) => {
 
   return (
     <>
-      {/* {menu && (
-        <BackStyle>
-          <div>X</div>
-        </BackStyle>
-      )} */}
       <Container admin={admin} menu={menu}>
         <Wrapper>
           <WelcomeContainer>
             <Welcome>
-              Hello, {currentUser ? currentUser.username : "Guest"}
+              Hello, {currentUser ? currentUser.data.username : "Guest"}
             </Welcome>
             <IconContainer onClick={() => dispatch({ type: "TOGGLE" })}>
               <CloseIcon />

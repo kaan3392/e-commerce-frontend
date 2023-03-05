@@ -20,65 +20,83 @@ const Wrapper = styled.div`
   width: 95%;
   max-width: 1100px;
   display: flex;
+  flex-direction: column;
+`;
+const Top = styled.div`
+  width: 100%;
+  display: flex;
 `;
 
 const Left = styled.div`
   display: flex;
   flex: 2;
+  height: 100%;
   flex-direction: column;
-  /* @media only screen and (max-width: 768px) {
-    flex: 1;
-  } */
 `;
 
 const ImageContainer = styled.div`
   width: 100%;
-  height: 350px;
+  height: 400px;
   display: flex;
   justify-content: center;
+  @media only screen and (max-width: 768px) {
+    height: 300px;
+  }
 `;
 
 const ImageWrapper = styled.div`
   width: 90%;
   height: 100%;
   display: flex;
+  align-items: center;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column-reverse;
+    height: 100%;
+  }
 `;
 
 const LittleImageContainer = styled.div`
   display: flex;
   flex-direction: column;
-
   flex: 1;
   height: 100%;
   overflow: hidden;
+  justify-content: space-between;
+  @media only screen and (max-width: 768px) {
+    flex-direction: row;
+    height: 30%;
+    width: 100%;
+    justify-content: space-around;
+  }
 `;
 
 const LittleImage = styled.img`
   width: 100%;
   height: 120px;
-
   object-fit: contain;
   cursor: pointer;
+  @media only screen and (max-width: 768px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const BigImageContainer = styled.div`
   flex: 4;
+  height: 100%;
+  @media only screen and (max-width: 768px) {
+    height: 70%;
+    width: 100%;
+  }
 `;
 
 const BigImage = styled.img`
   width: 100%;
   object-fit: contain;
   height: 100%;
-  display: ${(props) => props.little && "none"};
   @media only screen and (max-width: 768px) {
-    margin-right: 5px;
-    width: 200px;
-  }
-  @media only screen and (max-width: 385px) {
-    width: ${(props) => props.little && "35px"};
-    height: ${(props) => props.little && "35px"};
-    border-radius: ${(props) => props.little && "50%"};
-    display: ${(props) => props.little && "block"};
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -94,8 +112,12 @@ const Item = styled.div`
   border-bottom: ${(props) => (props.button ? "none" : " 1px solid lightgray")};
   padding: 15px 10px;
   display: ${(props) => props.button && "flex"};
-  text-align: ${props => props.title && "center"};
+  text-align: ${(props) => props.title && "center"};
   box-sizing: border-box;
+
+  @media only screen and (max-width: 480px) {
+    padding: 10px;
+  }
 
   span {
     color: ${(props) => props.status && "limegreen"};
@@ -113,23 +135,17 @@ const Right = styled.div`
 `;
 
 const Cart = styled.div`
-  width: 250px;
+  width: 90%;
   border: 1px solid lightgray;
   overflow: hidden;
-  @media only screen and (max-width: 768px) {
-    width: 200px;
-    margin-left: 10px;
-  }
-  @media only screen and (max-width: 480px) {
-    width: 180px;
-  }
+  max-width: 250px;
 `;
 
 const Select = styled.select`
   padding: 5px 10px;
   margin-left: 5px;
   font-size: 15px;
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 480px) {
     padding: 3px;
     font-size: 12px;
   }
@@ -137,9 +153,6 @@ const Select = styled.select`
 
 const Options = styled.option`
   padding: 10px;
-  @media only screen and (max-width: 768px) {
-    padding: 3px;
-  }
 `;
 
 const Button = styled.button`
@@ -170,7 +183,7 @@ const Color = styled.div`
   height: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.c};
-  opacity: ${(props) => props.a ? "" :"0.5"};
+  opacity: ${(props) => (props.a ? "" : "0.5")};
   padding: ${(props) => props.a && "2px"};
   cursor: pointer;
   &:hover {
@@ -180,18 +193,16 @@ const Color = styled.div`
 
 const Message = styled.div`
   cursor: pointer;
-  border:${(props) => (props.success ? "1px solid green" : "1px solid red")};
+  border: ${(props) => (props.success ? "1px solid green" : "1px solid red")};
   margin-top: 10px;
   color: ${(props) => (props.success ? "green" : "red")};
   padding: 5px;
   text-align: center;
   align-self: center;
-  @media only screen and (max-width: 768px) {
-    width: 150px;
-  }
-  @media only screen and (max-width: 385px) {
-    width: 120px;
-  }
+  width: 80%;
+`;
+const Bottom = styled.div`
+  width: 100%;
 `;
 
 const SinglePro = ({ id }) => {
@@ -215,7 +226,6 @@ const SinglePro = ({ id }) => {
       try {
         const res = await publicRequest.get("/products/" + id);
         setProduct(res.data);
-
         setAvg(
           res.data.comments?.reduce(
             (acc, curr) => (acc = acc + curr.review),
@@ -255,19 +265,16 @@ const SinglePro = ({ id }) => {
     dispatch({ type: "DARKER_OFF" });
   }, [id, dispatch]);
 
-
-  // console.log(product.img[0])
-
   if (isLoading) {
     return <LoadingScreen />;
   }
 
-  if(error){
-    return <p>Something went wrong</p>
+  if (!isLoading && error) {
+    return <p>Something went wrong</p>;
   }
 
   return (
-    <Container>
+    <Container open={open}>
       {open && (
         <AddReview
           setFireComments={setFireComments}
@@ -277,73 +284,81 @@ const SinglePro = ({ id }) => {
         />
       )}
       <Wrapper>
-        <Left>
-          <ImageContainer>
-            <ImageWrapper>
-              <LittleImageContainer>
-                {product?.img?.map((item, i) => (
-                  <LittleImage onClick={()=> setIndex(i)} key={i} src={item} />
-                ))}
-              </LittleImageContainer>
-              <BigImageContainer>
-                <BigImage src={product?.img?.[index]} />
-              </BigImageContainer>
-            </ImageWrapper>
-          </ImageContainer>
-          <Center>
-            <Item title>{product.title}</Item>
-            <Item>Desciription : {product.desc}</Item>
-          </Center>
+        <Top>
+          <Left>
+            <ImageContainer>
+              <ImageWrapper>
+                <LittleImageContainer>
+                  {product?.img?.map((item, i) => (
+                    <LittleImage
+                      onClick={() => setIndex(i)}
+                      key={i}
+                      src={item}
+                    />
+                  ))}
+                </LittleImageContainer>
+                <BigImageContainer>
+                  <BigImage src={product?.img?.[index]} />
+                </BigImageContainer>
+              </ImageWrapper>
+            </ImageContainer>
+            <Center>
+              <Item title>{product.title}</Item>
+              <Item>Desciription : {product.desc}</Item>
+            </Center>
+          </Left>
+          <Right>
+            <Cart>
+              <Item>Price: {product.price}$</Item>
+              <Item status>
+                In Stock: <span>{product.inStock ? "yes" : "no"}</span>
+              </Item>
+              <Item c>
+                <span style={{ marginRight: "10px" }}>Color:</span>
+                <ColorCon>
+                  {product.color?.map((c, i) => (
+                    <Color
+                      a={color === c && "a"}
+                      key={i}
+                      c={c}
+                      onClick={() => setColor(c)}
+                    />
+                  ))}
+                </ColorCon>
+              </Item>
+              <Item>
+                Quantity:
+                <Select onChange={(e) => setQuantity(Number(e.target.value))}>
+                  <Options value="1">1</Options>
+                  <Options value="2">2</Options>
+                  <Options value="3">3</Options>
+                  <Options value="4">4</Options>
+                  <Options value="5">5</Options>
+                </Select>
+              </Item>
+              <Item price>
+                Total: <span>{product.price * Number(quantity)}$</span>
+              </Item>
+              <Item button>
+                <Button onClick={handleClick}>Add To Cart</Button>
+              </Item>
+            </Cart>
+            {colorError && (
+              <Message onClick={() => setColorError(false)}>
+                Please select a color
+              </Message>
+            )}
+            {message && <Message success>Added to Cart</Message>}
+          </Right>
+        </Top>
+        <Bottom>
           <Comments
             product={product}
             comments={comments}
             avg={avg}
             setOpen={setOpen}
           />
-        </Left>
-        <Right>
-          <Cart>
-            <Item>Price: {product.price}$</Item>
-            <Item status>
-              In Stock: <span>{product.inStock ? "yes" : "no"}</span>
-            </Item>
-            <Item c>
-              <span style={{ marginRight: "10px" }}>Color:</span>
-              <ColorCon>
-                {product.color?.map((c, i) => (
-                  <Color
-                    a={color === c && "a"}
-                    key={i}
-                    c={c}
-                    onClick={() => setColor(c)}
-                  />
-                ))}
-              </ColorCon>
-            </Item>
-            <Item>
-              Quantity:
-              <Select onChange={(e) => setQuantity(Number(e.target.value))}>
-                <Options value="1">1</Options>
-                <Options value="2">2</Options>
-                <Options value="3">3</Options>
-                <Options value="4">4</Options>
-                <Options value="5">5</Options>
-              </Select>
-            </Item>
-            <Item price>
-              Total: <span>{product.price * Number(quantity)}$</span>
-            </Item>
-            <Item button>
-              <Button onClick={handleClick}>Add To Cart</Button>
-            </Item>
-          </Cart>
-          {colorError && (
-            <Message onClick={() => setColorError(false)}>
-              Please select a color
-            </Message>
-          )}
-          {message && <Message success>Added to Cart</Message>}
-        </Right>
+        </Bottom>
       </Wrapper>
     </Container>
   );

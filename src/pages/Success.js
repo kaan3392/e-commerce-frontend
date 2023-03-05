@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { userRequest } from "../requestMethods";
 import { emptyCart } from "../redux/cartRedux";
+import LoadingScreen from "../components/user/LoadingScreen"
 
 const Container = styled.div`
   height: 100vh;
@@ -33,13 +34,15 @@ const Success = () => {
   const cart = location.state.cart;
   const { currentUser } = useSelector((state) => state.user);
   const [orderId, setOrderId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     const createOrder = async () => {
       try {
         const res = await userRequest.post("/orders", {
-          userId: currentUser._id,
+          userId: currentUser.data.id,
           orderItems: cart.products.map((item) => ({
             product: item._id,
             quantity: item.quantity,
@@ -55,10 +58,16 @@ const Success = () => {
         setOrderId(res.data._id);
       } catch (err) {
         console.log(err);
+      }finally{
+        setIsLoading(false)
       }
     };
     data && createOrder();
   }, [cart, data, currentUser, dispatch]);
+
+
+  if(isLoading) return <LoadingScreen />
+
 
   return (
     <Container>

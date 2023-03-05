@@ -1,8 +1,7 @@
-import React from 'react'
+import React from "react";
 import { Rating } from "@mui/material";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
 
 const Container = styled.div`
   width: 100%;
@@ -23,23 +22,19 @@ const Wrapper = styled.div`
 `;
 
 export const Main = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  row-gap: 20px;
-  height: 100%;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
   @media only screen and (max-width: 768px) {
-    justify-content: space-between;
+    grid-template-columns: repeat(2, 1fr);
   }
   @media only screen and (max-width: 480px) {
-    justify-content: center;
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
 export const Frame = styled(Link)`
   display: flex;
-  width: 32%;
   border-radius: 10px;
   border: 1px solid lightgray;
   flex-direction: column;
@@ -51,12 +46,6 @@ export const Frame = styled(Link)`
   &:hover {
     transform: scale(1.02);
     box-shadow: 3px 2px 11px 1px rgba(0, 0, 0, 0.2);
-  }
-  @media only screen and (max-width: 768px) {
-    width: 48%;
-  }
-  @media only screen and (max-width: 480px) {
-    width: 80%;
   }
 `;
 
@@ -99,7 +88,7 @@ export const Price = styled.span`
   font-size: 20px;
 `;
 
-export default function Products({products, title}) {
+export default function Products({ products, title }) {
   return (
     <Container>
       <Wrapper>
@@ -131,5 +120,5 @@ export default function Products({products, title}) {
         </Main>
       </Wrapper>
     </Container>
-  )
+  );
 }

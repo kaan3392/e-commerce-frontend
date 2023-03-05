@@ -136,12 +136,13 @@ const Profile = () => {
   const [passwordAgain, setPasswordAgain] = useState("");
   const [message, setMessage] = useState(false);
   const dispatch = useDispatch();
-  console.log(theme.breakpoints.values);
+
+  console.log(currentUser)
 
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const res = await userRequest.get(`/orders/find/${currentUser._id}`);
+        const res = await userRequest.get(`/orders/find/${currentUser.data.id}`);
         console.log(res.data);
         setOrders(res.data);
       } catch (err) {
@@ -166,6 +167,10 @@ const Profile = () => {
       try {
         updateUser(dispatch, currentUser._id, user);
         setMessage(true);
+        
+      } catch (err) {
+        console.log(err);
+      }finally{
         setTimeout(() => {
           setMessage(false);
         }, 3000);
@@ -173,8 +178,6 @@ const Profile = () => {
         setPassword("");
         setUsername("");
         setPasswordAgain("");
-      } catch (err) {
-        console.log(err);
       }
     }
   };

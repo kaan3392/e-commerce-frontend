@@ -6,35 +6,47 @@ import { Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const ReviewItem = styled.span`
-  margin-right: 10px;
-`;
+
 
 const ReviewCon = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom: 1px solid lightgray;
-  padding: 10px 5px;
+  /* border-bottom: 1px solid lightgray; */
+  /* padding: 10px 5px; */
   z-index: 1;
+  margin-top: 20px;
+`;
+
+const FirstLine = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+  @media only screen and (max-width: 385px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+`;
+
+const ReviewItem = styled.span`
+  margin-right: 10px;
 `;
 
 const AddComment = styled.button`
-  border: none;
-  box-shadow: 0px 0px 11px -5px rgba(0, 0, 0, 0.5);
+  border: 1px solid lightgray;
   padding: 5px 15px;
-  color: white;
   cursor: pointer;
-  margin-left: 10px;
-  background: linear-gradient(to right, #283c86, #45a247);
+  /* margin-left: 10px; */
   border-radius: 5px;
   font-weight: 500;
+  font-size: 18px;
   &:hover {
     background-color: lightgray;
   }
 `;
 const Reviews = styled.div`
-  height: 350px;
+  height: 300px;
   width: 100%;
   overflow-y: scroll;
   margin-top: 10px;
@@ -42,16 +54,16 @@ const Reviews = styled.div`
     width: 7px;
   }
   &::-webkit-scrollbar-track {
-    background-color: #f3f3f3;
+    background-color: #e4e4e4;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: rgb(179, 179, 179);
+    background-color: rgb(151, 151, 151);
   }
 `;
 
 const Caution = styled.div`
-  background-color: red;
-  color: white;
+  border:1px solid red;
+  color: red;
   padding: 5px;
   border-radius: 5px;
 `;
@@ -60,15 +72,7 @@ const GoSingIn = styled(Link)`
   color: inherit;
 `;
 
-const FirstLine = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-  @media only screen and (max-width: 385px) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-  }
-`;
+
 
 export default function Comments({ product, comments, avg, setOpen }) {
   const { currentUser } = useSelector((state) => state.user);
@@ -101,8 +105,8 @@ export default function Comments({ product, comments, avg, setOpen }) {
       </ReviewCon>
       {comments?.length > 0 && (
         <Reviews>
-          {comments.map((c, i) => (
-            <Review key={i} c={c} />
+          {comments.map((comment, i) => (
+            <Review key={i} comment={comment} />
           ))}
         </Reviews>
       )}

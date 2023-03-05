@@ -60,7 +60,7 @@ const AdminHome = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar admin="admin" />
       <Menu />
       <Container>
         <LeftSide />

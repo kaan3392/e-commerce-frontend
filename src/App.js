@@ -19,6 +19,7 @@ import Order from "./pages/Order";
 import OrderList from "./pages/OrderList";
 import SalesAnalytics from "./pages/SalesAnalytics";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/user/ScrollToTop";
 
 const overlayStyle = {
   background: "rgba(0, 0, 0, 0.4)",
@@ -40,6 +41,7 @@ function App() {
     <div style={{ position: "relative", }}>
       <div style={darker ? overlayStyle : undefined} />
       <BrowserRouter>
+      <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<SingleProduct />} />

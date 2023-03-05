@@ -1,4 +1,4 @@
-import { Delete } from "@mui/icons-material";
+import { DeleteIcon } from "../constant/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -10,18 +10,18 @@ import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { deleteProduct, emptyCart } from "../redux/cartRedux";
 import {color} from "../constant/colors"
+import Caurier from "../components/user/Caurier";
+import Footer from "../components/user/Footer";
 
 
 const KEY = process.env.REACT_APP_STRIPE;
 
 const Wrapper = styled.div`
-  width: 100%;
-  padding: 20px 150px;
+  width: 90%;
+  max-width: 1100px;
   display: flex;
   flex-direction: column;
-  @media only screen and (max-width: 768px) {
-    padding: 10px 30px;
-  }
+ 
   
 `;
 
@@ -33,14 +33,14 @@ const Title = styled.h1`
 const Main = styled.div`
   display: flex;
   width: 100%;
-  @media only screen and (max-width: 385px) {
+  @media only screen and (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
 const Left = styled.div`
   flex: 2;
-  @media only screen and (max-width: 385px) {
+  @media only screen and (max-width: 480px) {
     margin-bottom: 20px;
   }
 `;
@@ -66,7 +66,7 @@ const Image = styled.img`
   width: 100px;
   height: 100px;
   object-fit: contain;
-  @media only screen and (max-width: 385px) {
+  @media only screen and (max-width: 480px) {
     width: 50px;
     height: 50px;
   }
@@ -103,12 +103,16 @@ const QuantityCon = styled.div`
 const ButtonCon = styled.div`
   flex: 1;
   padding: 5px;
+  display: flex;
+  align-items: center;
   svg {
     cursor: pointer;
     transition: all 0.3s ease;
+    width: 24px;
+    height: 24px;
     &:hover {
       transform: scale(1.1);
-      color: red;
+      fill: red;
     }
   }
 `;
@@ -199,7 +203,6 @@ const Cart = () => {
         });
         navigate("/success", { state: { stripeData: res.data, cart: cart } });
       } catch (err) {
-        console.log(err);
       }
     };
     stripeToken && cart.total > 0 && makeRequest();
@@ -230,7 +233,7 @@ const Cart = () => {
                   </ColorCon>
                   <QuantityCon>{product.quantity}</QuantityCon>
                   <ButtonCon onClick={() => handleDelete(product)}>
-                    <Delete />
+                    <DeleteIcon />
                   </ButtonCon>
                 </Item>
               ))}
@@ -291,6 +294,8 @@ const Cart = () => {
           </Main>
         </Wrapper>
       </Container>
+      <Caurier/>
+      <Footer/>
     </>
   );
 };
