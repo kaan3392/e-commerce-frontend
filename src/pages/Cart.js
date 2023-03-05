@@ -203,6 +203,7 @@ const Cart = () => {
         });
         navigate("/success", { state: { stripeData: res.data, cart: cart } });
       } catch (err) {
+        console.log(err)
       }
     };
     stripeToken && cart.total > 0 && makeRequest();
