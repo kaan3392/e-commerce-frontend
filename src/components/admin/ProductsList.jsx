@@ -156,7 +156,7 @@ const UsersList = () => {
       <Wrapper>
       <Main>
         <Title >Product List</Title>
-        <Link to="/newproduct">
+        <Link to="/admin/newproduct">
           <Button main>Create</Button>
         </Link>
       </Main>

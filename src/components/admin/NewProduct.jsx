@@ -2,15 +2,10 @@ import { Upload } from "@mui/icons-material";
 import { useState } from "react";
 import styled from "styled-components";
 import { color } from "../../constant/colors";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import app from "../../firebase";
 import { addProduct } from "../../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
+import uploadImages from "../../utils/imageUpload";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -28,7 +23,6 @@ const Form = styled.form`
   flex-wrap: wrap;
   @media only screen and (max-width: 385px) {
     flex-direction: column;
-
   }
 `;
 
@@ -37,7 +31,6 @@ const Item = styled.div`
   margin-bottom: 15px;
   @media only screen and (max-width: 385px) {
     width: 80%;
-
   }
 `;
 
@@ -108,11 +101,12 @@ const NewProduct = () => {
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
   const [color, setColor] = useState([]);
-  const [percentage, setPercentage] = useState(null);
   const [loadingFile, setLoadingFile] = useState(false);
   const [message, setMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.product);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setInputs((prev) => {
@@ -123,54 +117,30 @@ const NewProduct = () => {
     setColor(e.target.value.split(","));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoadingFile(true);
-    const fileName = new Date().getTime() + file.name;
-    const storage = getStorage(app);
 
-    const storageRef = ref(storage, fileName);
-
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setPercentage("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const product = { ...inputs, img: downloadURL, color };
-          addProduct(product, dispatch);
-          setMessage(true);
-          setLoadingFile(false);
-          setInputs({});
-          setColor([]);
-          setFile(null);
-          setTimeout(() => {
-            setMessage(false);
-          }, 3000);
-        });
-      }
-    );
+    try {
+      const images = await uploadImages(file);
+      const product = { ...inputs, img: images, color };
+      await addProduct(product, dispatch);
+      setMessage(true);
+      setTimeout(() => {
+        navigate("/admin/productlist")
+      }, 2000);
+    } catch (err) {
+      setErrorMessage(err)
+    } finally {
+      setLoadingFile(false);
+      setInputs({});
+      setColor([]);
+      setFile(null);
+      setTimeout(() => {
+        setMessage(false);
+        setErrorMessage(false)
+      }, 3000);
+    }
   };
 
   return (
@@ -184,7 +154,8 @@ const NewProduct = () => {
               <Upload />
             </Icon>
             <Input
-              onChange={(e) => setFile(e.target.files[0])}
+              multiple
+              onChange={(e) => setFile(e.target.files)}
               icon
               id="input"
               type="file"
@@ -196,7 +167,7 @@ const NewProduct = () => {
               <Input
                 name="title"
                 onChange={handleChange}
-                placeholder="title..."
+                placeholder="Title"
               />
             </InputArea>
           </Item>
@@ -206,7 +177,7 @@ const NewProduct = () => {
               <Input
                 name="desc"
                 onChange={handleChange}
-                placeholder="desc..."
+                placeholder="Description"
               />
             </InputArea>
           </Item>
@@ -217,7 +188,7 @@ const NewProduct = () => {
                 type="number"
                 name="price"
                 onChange={handleChange}
-                placeholder="$123..."
+                placeholder="$12345"
               />
             </InputArea>
           </Item>
@@ -266,6 +237,7 @@ const NewProduct = () => {
               <Options value="asus">Asus</Options>
               <Options value="dell">Dell</Options>
               <Options value="lenovo">Lenovo</Options>
+              <Options value="huawei">Huawei</Options>
             </Select>
           </Item>
           <Item>
@@ -274,7 +246,7 @@ const NewProduct = () => {
             </Button>
           </Item>
         </Form>
-        {loadingFile && <Message>{percentage}</Message>}
+        {loadingFile && <Message>Please wait...</Message>}
         {message && !error && (
           <Message>The product has been successfully added</Message>
         )}
