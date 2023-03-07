@@ -90,8 +90,8 @@ const Icon = styled.label`
 
 const Message = styled.div`
   width: 300px;
-  background-color: green;
-  color: white;
+  border: ${props => props.err ? "1px solid red" : "1px solid green"};
+  color: ${props => props.err ? "red" : "green"};
   padding: 5px 7px;
   margin-top: 10px;
   border-radius: 5px;
@@ -106,7 +106,7 @@ const NewProduct = () => {
   const [errorMessage, setErrorMessage] = useState(false);
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.product);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputs((prev) => {
@@ -119,7 +119,16 @@ const NewProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(file === null || inputs === {} || color === []) {
+      setErrorMessage("Fill in all fields")
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
+      return
+    }
+    
     setLoadingFile(true);
+    
 
     try {
       const images = await uploadImages(file);
@@ -127,10 +136,10 @@ const NewProduct = () => {
       await addProduct(product, dispatch);
       setMessage(true);
       setTimeout(() => {
-        navigate("/admin/productlist")
+        navigate("/admin/productlist");
       }, 2000);
     } catch (err) {
-      setErrorMessage(err)
+      setErrorMessage(err);
     } finally {
       setLoadingFile(false);
       setInputs({});
@@ -138,7 +147,7 @@ const NewProduct = () => {
       setFile(null);
       setTimeout(() => {
         setMessage(false);
-        setErrorMessage(false)
+        setErrorMessage(false);
       }, 3000);
     }
   };
@@ -149,7 +158,7 @@ const NewProduct = () => {
         <Text title>New Product</Text>
         <Form onSubmit={handleSubmit}>
           <Item>
-            <Text>Image</Text>
+            <Text>Images</Text>
             <Icon htmlFor="input">
               <Upload />
             </Icon>
@@ -159,20 +168,17 @@ const NewProduct = () => {
               icon
               id="input"
               type="file"
+              accept=".jpg, .jpeg, .png, .webp"
             />
           </Item>
           <Item>
             <Text>Title</Text>
             <InputArea>
-              <Input
-                name="title"
-                onChange={handleChange}
-                placeholder="Title"
-              />
+              <Input name="title" onChange={handleChange} placeholder="Title" />
             </InputArea>
           </Item>
           <Item>
-            <Text>Desc</Text>
+            <Text>Description</Text>
             <InputArea>
               <Input
                 name="desc"
@@ -246,6 +252,7 @@ const NewProduct = () => {
             </Button>
           </Item>
         </Form>
+        {errorMessage && <Message err="true">{errorMessage}</Message>}
         {loadingFile && <Message>Please wait...</Message>}
         {message && !error && (
           <Message>The product has been successfully added</Message>

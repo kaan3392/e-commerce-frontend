@@ -6,6 +6,7 @@ import FeaturedInfo from "../components/admin/FeaturedInfo";
 import Chart from "../components/admin/Chart";
 import { useEffect, useMemo, useState } from "react";
 import { userRequest } from "../requestMethods";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -20,6 +21,8 @@ const RightSide = styled.div`
 
 const AdminHome = () => {
   const [userStats, setUserStats] = useState([]);
+
+  const location = useLocation();
 
   const MONTHS = useMemo(
     () => [
@@ -56,7 +59,7 @@ const AdminHome = () => {
       }
     };
     getStats();
-  }, [MONTHS]);
+  }, [MONTHS, location.pathname]);
 
   return (
     <>

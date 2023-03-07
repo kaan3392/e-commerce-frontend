@@ -72,7 +72,7 @@ const Order = () => {
   useEffect(() => {
     const getOrder = async () => {
       try {
-        const res = await userRequest.get(`/orders?id=${id}`);
+        const res = await userRequest.get(`/orders/${id}`);
         setOrder(res.data);
       } catch (err) {
         console.log(err);

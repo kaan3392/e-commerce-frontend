@@ -120,11 +120,12 @@ const Item = styled.div`
   }
 
   span {
-    color: ${(props) => props.status && "limegreen"};
     font-size: ${(props) => props.price && "20px"};
   }
 `;
-
+const InStock = styled.span`
+  color: ${(props) => (props.status ? "limegreen" : "red")};
+`;
 const Right = styled.div`
   flex: 1;
   position: relative;
@@ -310,8 +311,8 @@ const SinglePro = ({ id }) => {
           <Right>
             <Cart>
               <Item>Price: {product.price}$</Item>
-              <Item status>
-                In Stock: <span>{product.inStock ? "yes" : "no"}</span>
+              <Item >
+                In Stock: <InStock status={product.inStock}>{product.inStock ? "yes" : "no"}</InStock>
               </Item>
               <Item c>
                 <span style={{ marginRight: "10px" }}>Color:</span>

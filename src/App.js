@@ -60,6 +60,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/success" element={<Success />} />
           <Route path="/*" element={<NotFound />} />
+          <Route path="orders/:id" element={<Order />} />
           {admin && (
             <>
               <Route path="/admin" element={<Admin />} />
@@ -67,7 +68,6 @@ function App() {
               <Route path="admin/productlist" element={<ProductList />} />
               <Route path="admin/product/:productid" element={<Product />} />
               <Route path="admin/newproduct" element={<NewProducts />} />
-              <Route path="orders/:id" element={<Order />} />
               <Route path="orders" element={<OrderList />} />
               <Route path="sales" element={<SalesAnalytics />} />
             </>
