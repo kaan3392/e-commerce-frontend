@@ -119,7 +119,7 @@ const Register = () => {
           </Form>
           {errorMessage && <Message>{errorMessage}</Message>}
           <Login to="/login">Do you already have an account? </Login>
-          <ForgotPassword to="/login">Forgot password?</ForgotPassword>
+          <ForgotPassword to="/forgot">Forgot password?</ForgotPassword>
         </Wrapper>
       </Container>
     </>

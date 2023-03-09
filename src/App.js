@@ -20,6 +20,8 @@ import OrderList from "./pages/OrderList";
 import SalesAnalytics from "./pages/SalesAnalytics";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/user/ScrollToTop";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const overlayStyle = {
   background: "rgba(0, 0, 0, 0.4)",
@@ -55,6 +57,16 @@ function App() {
             path="/register"
             exact
             element={user ? <Navigate to="/" /> : <Register />}
+          />
+          <Route
+            path="/forgot"
+            exact
+            element={user ? <Navigate to="/" /> : <ForgotPassword/>}
+          />
+          <Route
+            path="/resetpassword"
+            exact
+            element={user ? <Navigate to="/" /> : <ResetPassword/>}
           />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Cart />} />

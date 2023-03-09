@@ -11,7 +11,7 @@ import { publicRequest } from "../requestMethods";
 
 export const Container = styled.div`
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 99px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,7 +26,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.form``;
+export const Form = styled.form``;
 
 export const Text = styled.div`
   width: 100%;
@@ -91,7 +91,7 @@ export const ForgotPassword = styled(Link)`
   margin-top: 20px;
 `;
 
-const Error = styled.div`
+export const Error = styled.div`
   color: red;
   font-size: 14px;
   font-weight: lighter;
@@ -173,7 +173,7 @@ const Login = () => {
           </Form>
           {errorMessage && <Error>{errorMessage}</Error>}
           <Register to="/register">Don't you have an account? </Register>
-          <ForgotPassword to="/register">Forgot password?</ForgotPassword>
+          <ForgotPassword to="/forgot">Forgot password?</ForgotPassword>
         </Wrapper>
       </Container>
     </>
