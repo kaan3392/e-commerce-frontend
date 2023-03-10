@@ -273,7 +273,6 @@ const SinglePro = ({ id }) => {
   if (!isLoading && error) {
     return <p>Something went wrong</p>;
   }
-
   return (
     <Container open={open}>
       {open && (
@@ -311,8 +310,11 @@ const SinglePro = ({ id }) => {
           <Right>
             <Cart>
               <Item>Price: {product.price}$</Item>
-              <Item >
-                In Stock: <InStock status={product.inStock}>{product.inStock ? "yes" : "no"}</InStock>
+              <Item>
+                In Stock:{" "}
+                <InStock status={product.inStock}>
+                  {product.inStock ? "yes" : "no"}
+                </InStock>
               </Item>
               <Item c>
                 <span style={{ marginRight: "10px" }}>Color:</span>
@@ -341,7 +343,13 @@ const SinglePro = ({ id }) => {
                 Total: <span>{product.price * Number(quantity)}$</span>
               </Item>
               <Item button>
-                <Button onClick={handleClick}>Add To Cart</Button>
+                {product.inStock === true ? (
+                  <Button onClick={handleClick}>Add To Cart</Button>
+                ) : (
+                  <div style={{ color: "red" }}>
+                    This product is out of stock!
+                  </div>
+                )}
               </Item>
             </Cart>
             {colorError && (

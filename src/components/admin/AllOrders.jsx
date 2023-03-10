@@ -113,6 +113,7 @@ const Profile = () => {
     const getOrders = async () => {
       try {
         const res = await userRequest.get(`/orders`);
+        console.log(res)
         setOrders(res.data);
       } catch (err) {
         console.log(err);

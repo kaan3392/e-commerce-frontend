@@ -82,7 +82,7 @@ const MoneyRate = styled.span`
   align-items: center;
   margin-left: 10px;
   svg {
-    color: ${(props) => (props.c ? "green" : "red")};
+    color: ${(props) => (props.color ? "green" : "red")};
   }
   @media only screen and (max-width: 768px) {
     margin-left: 5px;
@@ -125,7 +125,7 @@ const FeaturedInfo = () => {
           <Title>Revanue</Title>
           <MoneyContainer>
             <Money>${income}</Money>
-            <MoneyRate c={incomeRate > 0 && "c"}>
+            <MoneyRate color={incomeRate > 0 && "true"}>
               %{incomeRate}
               {incomeRate > 0 ? <ArrowUpward /> : <ArrowDownward />}
             </MoneyRate>

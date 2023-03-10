@@ -137,13 +137,10 @@ const Profile = () => {
   const [message, setMessage] = useState(false);
   const dispatch = useDispatch();
 
-  console.log(currentUser)
-
   useEffect(() => {
     const getOrders = async () => {
       try {
         const res = await userRequest.get(`/orders/find/${currentUser.data.id}`);
-        console.log(res.data);
         setOrders(res.data);
       } catch (err) {
         console.log(err);
