@@ -12,15 +12,15 @@ const Container = styled.div`
   justify-content: center;
   margin-top: 10px;
   @media only screen and (max-width: 768px) {
-    height: calc(80vh - 99px);
+    height: calc(95vh - 99px);
     
   }
   @media only screen and (max-width: 480px) {
-    height: calc(60vh - 99px);
+    height: calc(90vh - 99px);
     margin-top: 5px 0px;
   }
   @media only screen and (max-width: 425px) {
-    height: calc(50vh - 99px);
+    height: calc(80vh - 99px);
   }
 `;
 
